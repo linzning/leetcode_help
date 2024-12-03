@@ -1,8 +1,7 @@
-package list;
+package linklist;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 
 
 /**

@@ -1,6 +1,6 @@
 package utils;
 
-public class Math {
+public class MyMath {
     /**
      * 最大公约数
      * @param a
@@ -15,4 +15,16 @@ public class Math {
         }
         return a;
     }
+
+    /**
+     * 最小公倍数
+     * @param a
+     * @param b
+     * @return
+     */
+    public static int lcm(int a, int b) {
+        return a * b / GCD(a, b);
+    }
+
+
 }

@@ -1,6 +1,5 @@
-package list;
+package linklist;
 
-import java.util.List;
 import java.util.Random;
 
 public class ListNode {
@@ -182,7 +181,7 @@ public class ListNode {
      */
     public static ListNode listMergeSort(ListNode head){
         if(head.next==null)return head;
-        ListNode pre= list.ListNode.getMiddle_l(head);
+        ListNode pre= linklist.ListNode.getMiddle_l(head);
         ListNode head1=pre.next;
         pre.next=null;
         head=listMergeSort(head);
