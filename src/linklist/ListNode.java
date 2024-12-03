@@ -1,5 +1,7 @@
 package linklist;
 
+import utils.Utils;
+
 import java.util.Random;
 
 public class ListNode {
@@ -24,11 +26,12 @@ public class ListNode {
     }
 
     /**
-     * 数组构建链表
-     * @param listValues
+     * 字符串构建链表
+     * @param str
      * @return
      */
-    public static ListNode buildList(int[] listValues) {
+    public static ListNode buildList(String str) {
+        int[] listValues= Utils.changeS_nums_1(str);
         if (listValues == null || listValues.length == 0)
             return null;
 

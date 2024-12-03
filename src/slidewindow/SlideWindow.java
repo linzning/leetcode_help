@@ -24,7 +24,7 @@ public class SlideWindow {
         return hashSet.size()==1<<k;
     }
     /**
-     * 不定长滑动窗口模板
+     * 不定长滑动窗口模板（最长）
      * 右侧不断增长，左侧维护一个left变量
      * https://leetcode.cn/problems/maximum-length-substring-with-two-occurrences/description/
      */

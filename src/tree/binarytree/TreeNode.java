@@ -1,5 +1,7 @@
 package tree.binarytree;
 
+import utils.Utils;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -37,9 +39,10 @@ public class TreeNode extends BinaryTreeNode {
 
     /**
      * 根据leetcode给出的树的列表形式（层序遍历，不存在的节点是-1(leetcode给的是null)）构造一个二叉树
-     * @param nodes int[]
+     * @param str
      */
-    public static TreeNode buildTree(int[]nodes){
+    public static TreeNode buildTree(String str){
+        int[]nodes= Utils.changeS_nums_1(str);
         if(nodes==null||nodes.length==0)return null;
         TreeNode root = new TreeNode(nodes[0]);
         Queue<TreeNode> queue = new LinkedList<>();

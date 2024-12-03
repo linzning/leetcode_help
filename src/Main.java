@@ -2,24 +2,29 @@ import linklist.ListNode;
 import linklist.SkipList;
 import tree.binarytree.BinaryTreeNode;
 import tree.binarytree.TreeNode;
+import utils.BinarySearch;
 import utils.Utils;
 
 import java.util.*;
 
 class Solution {
-    public int longestEqualSubarray(List<Integer> nums, int k) {
-        HashMap<Integer,Integer>map=new HashMap<>();
-        int left=0;
+    public int maximumWhiteTiles(int[][] tiles, int carpetLen) {
+        Arrays.sort(tiles,(a,b)->a[0]-b[0]);
+        int[]presum=new int[tiles.length+1];
+        int[]right=new int[tiles.length];
+        for(int i=0;i<tiles.length;i++){
+            presum[i+1]=presum[i]+tiles[i][1]-tiles[i][0]+1;
+            right[i]=tiles[i][1];
+        }
         int ans=0;
-        for(int i=0;i<nums.size();i++){
-            int x=nums.get(i);
-            map.put(x,map.getOrDefault(x,0)+1);
-            while (map.size()>k+1){
-                int n=nums.get(left++);
-                map.put(n,map.get(n)-1);
-                if(map.get(n)==0)map.remove(n);
+        for(int i=0;i<tiles.length;i++){
+            int rightlen=tiles[i][0]+carpetLen-1;
+            int index= BinarySearch.binarySearch_int_l(right,0,right.length-1,rightlen);
+            int len=presum[index+1]-presum[i];
+            if(index!=tiles.length-1){
+                len+=rightlen-tiles[index+1][0]<0?0:rightlen-tiles[index+1][0]+1;
             }
-            ans=Math.max(ans,map.values().stream().max(Integer::compareTo).orElse(-1));
+            ans=Math.max(ans,len);
         }
         return ans;
     }
@@ -27,38 +32,73 @@ class Solution {
 
 public class Main {
     public static void main(String[] args) {
-        List<Integer> list_int1_1 = new ArrayList<>(Arrays.asList(3,4,2,1));
-        List<List<Integer>> list_int2_1;
-        list_int2_1 = Utils.changeS_list_2("[[1],[2],[3],[]]");
-        int[] num_int1_1 = new int[]{1,3,2,3,1,3};
-        int[] num_int1_2 = new int[]{};
-        int[][] num_int2_1;
-        num_int2_1 = Utils.changeS_nums_2("[[1,0],[1,2],[1,3]]");
-        int[][] num_int2_2;
-        num_int2_2 = Utils.changeS_nums_2("[[0,1],[1,0]]");
-        char[][] char2_1 = new char[][]{{'(', ')'}};
-        List<String> list_string = new ArrayList<>();
-        list_string.add("E12");
-        list_string.add("1X1");
-        list_string.add("21S");
-        String[] words = new String[]{"7"};
-        //创建链表
-        int[] linknode1 = {1, 2, -3, 3, 1};
-        ListNode head1 = ListNode.buildList(linknode1);
-        int[] linknode2 = {1, 3, 4};
-        ListNode head2 = ListNode.buildList(linknode2);
-        int[] linknode3 = {2, 6};
-        ListNode head3 = ListNode.buildList(linknode3);
-        ListNode[] lists = new ListNode[]{head1, head2, head3};
-        // 创建完全二叉树的节点
-        int[] nodes = {4, -7, -3, -1, -1, -9, -3, 9, -7, -4, -1, 6, -1, -6, -6, -1, -1, 0, 6, 5, -1, 9, -1, -1, -1, -4, -1, -1, -1, -2};
-        TreeNode root = TreeNode.buildTree(nodes);
-        //BinaryTreeNode.printTree(root);
-
+        init();
         Solution s = new Solution();
-        int ans = s.longestEqualSubarray(list_int1_1,0);
+        int ans = s.maximumWhiteTiles(num_int2_1,10);
         System.out.println(ans);
     }
+    static void init(){
+        init_list();
+        init_nums();
+        init_char();
+        init_string();
+        init_listNode();
+        init_tree();
+    }
+    static void init_list(){
+        list_int1_1 = Utils.changeS_list_1("[1,2]");
+        list_int2_1 = Utils.changeS_list_2("[[1],[2],[3],[]]");
+    }
+    static void init_nums(){
+        num_int1_1 = Utils.changeS_nums_1("[1,2,3]");
+        num_int1_2 = Utils.changeS_nums_1("[1,2]");
+        num_int2_1 = Utils.changeS_nums_2("[[1,5],[10,11],[12,18],[20,25],[30,32]]");
+        num_int2_2 = Utils.changeS_nums_2("[[0,1],[1,0]]");
+    }
+    static void init_char(){
+        char1_1=new char[]{'a','b'};
+        char2_1 = new char[][]{{'(', ')'}};
+    }
+    static void init_string(){
+        {
+            list_string = new ArrayList<>();
+            list_string.add("E12");
+            list_string.add("1X1");
+            list_string.add("21S");
+        }
+        words = new String[]{"7"};
+    }
+    static void init_listNode(){
+        head1 = ListNode.buildList("[1, 2, -3, 3, 1]");
+        head2 = ListNode.buildList("[1, 2, -3, 3, 1]");
+        head3 = ListNode.buildList("[1, 2, -3, 3, 1]");
+        lists = new ListNode[]{head1, head2, head3};
+    }
+    static void init_tree(){
+        root = TreeNode.buildTree("[1, 2, -3, 3, 1]");
+        //BinaryTreeNode.printTree(root);
+    }
+    /* list */
+    static List<Integer> list_int1_1;
+    static List<List<Integer>> list_int2_1;
+    /* nums */
+    static int[] num_int1_1;
+    static int[] num_int1_2;
+    static int[][] num_int2_1;
+    static int[][] num_int2_2;
+    /* char */
+    static char[] char1_1;
+    static char[][] char2_1;
+    /* string */
+    static List<String> list_string;
+    static String[] words;
+    /* 链表 */
+    static ListNode head1;
+    static ListNode head2;
+    static ListNode head3;
+    static ListNode[] lists;
+    /* tree */
+    static TreeNode root;
 }
 
 
