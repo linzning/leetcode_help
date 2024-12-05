@@ -16,7 +16,7 @@ import java.util.*;
 class Solution {
     public long countGood(int[] nums, int k) {
         Counter<Integer>count=new Counter<>();
-        return 0L;
+
     }
 }
 
@@ -26,9 +26,6 @@ public class Main {
 //        Solution s = new Solution();
 //        long ans = s.countGood(num_int1_1, 2);
 //        System.out.println(ans);
-
-        Counter<Integer>count=new Counter<>(num_int1_1);
-        System.out.println(count);
     }
 
     static void init() {
