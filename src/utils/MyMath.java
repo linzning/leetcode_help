@@ -36,4 +36,31 @@ public class MyMath {
     public static int max_nums(int[]nums){
         return Arrays.stream(nums).max().orElse(-1);
     }
+
+    /**
+     * 素数计数
+     * @param n
+     * @return
+     */
+    public static int countPrimes(int n) {
+        /*
+        埃氏筛算法
+        质数的倍数是合数，所以当遍历到质数时，把它的所有倍数筛去
+        优化：从$i*i $开始筛，因为$2*i , 3*i$已经被2 ，3筛过了
+         */
+        int[]isprime=new int[n];
+        Arrays.fill(isprime,1);
+        int ans=0;
+        for(int i=2;i<n;i++){
+            if(isprime[i]==1){
+                ans++;
+                if((long)i*i<n) {
+                    for (int j = i * i; j < n; j += i) {
+                        isprime[j] = 0;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
 }

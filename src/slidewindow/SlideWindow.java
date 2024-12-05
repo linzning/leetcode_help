@@ -41,6 +41,8 @@ public class SlideWindow {
                 // 左侧缩减
                 count[str[left++]-'a']--;
             }
+            // ans+=left+1 越长越合法
+            //
             ans = Math.max(ans, i - left + 1);
         }
         return ans;
