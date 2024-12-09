@@ -1,12 +1,17 @@
 package utils;
 
+import datastructer.STtable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Utils {
+/**
+ * 数据格式的转换
+ */
+public class DataUtils {
     /**
      * string转一维数组
      * @param str
@@ -106,5 +111,101 @@ public class Utils {
             }
         }
         return ans;
+    }
+
+    /**
+     * string转char[]
+     * @param s
+     * @return
+     */
+    public static char[] changeS_chararr_1(String s){
+        // 移除字符串中的方括号、双引号、逗号和空格
+        s = s.replaceAll("[\\[\\]\" ,]", "");
+
+        // 将处理后的字符串转换为字符数组
+        char[] charArray = s.toCharArray();
+        return charArray;
+    }
+
+    /**
+     * string转char[][]
+     * @param s
+     * @return
+     */
+    public static char[][] changeS_chararr_2(String s){
+        // 先去掉字符串的多余的空格，方便后续处理
+        s = s.replaceAll("\\s", "");
+
+        // 通过 ", " 分割字符串，得到每一行的数据
+        String[] rows = s.substring(1, s.length() - 1).split("],\\[");
+
+        // 去掉每个部分的方括号和双引号
+        char[][] charArray = new char[rows.length][];
+
+        for (int i = 0; i < rows.length; i++) {
+            // 移除方括号和双引号后，拆分每个字符
+            String row = rows[i].replaceAll("[\\[\\]\" ,]", "");
+            // 将每一行字符串转换成字符数组
+            charArray[i] = row.toCharArray();
+        }
+
+        return charArray;
+    }
+
+    public static List<String> changeS_strlist_1(String s){
+        // 去掉前后中括号和空格
+        s = s.substring(1, s.length() - 1).trim();
+
+        // 用逗号分割并去掉引号
+        String[] items = s.split(",\\s*");
+        List<String> result = new ArrayList<>();
+
+        for (String item : items) {
+            result.add(item.replace("\"", ""));
+        }
+
+        return result;
+    }
+
+    public static List<List<String>> chanegS_strlist_2(String s){
+        // 去掉最外层的中括号
+        s = s.substring(1, s.length() - 1).trim();
+
+        // 分割出每一个子数组的字符串
+        String[] subArrays = s.split("\\],\\s*\\[");
+
+        List<List<String>> result = new ArrayList<>();
+
+        // 遍历每个子数组，处理成 List<String>
+        for (String subArray : subArrays) {
+            // 去掉多余的双引号和中括号
+            subArray = subArray.replace("[", "").replace("]", "").trim();
+
+            // 按照逗号分割每个元素
+            String[] elements = subArray.split(",\\s*");
+
+            // 将每个子数组的元素转换成 List<String>
+            List<String> list = new ArrayList<>();
+            for (String element : elements) {
+                list.add(element.replace("\"", ""));
+            }
+            result.add(list);
+        }
+
+        return result;
+    }
+
+    public static String[] changeS_strarr_1(String s){
+        // 去掉最外层的中括号
+        s = s.substring(1, s.length() - 1).trim();
+
+        // 用逗号分割并去掉每个元素的引号
+        String[] items = s.split(",\\s*");
+
+        // 去除每个元素的双引号，并存入数组
+        for (int i = 0; i < items.length; i++) {
+            items[i] = items[i].replace("\"", "");
+        }
+        return items;
     }
 }

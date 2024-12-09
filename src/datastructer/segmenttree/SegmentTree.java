@@ -1,4 +1,4 @@
-package datastructer;
+package datastructer.segmenttree;
 
 /**
  * 堆存储的线段树，没有动态开点

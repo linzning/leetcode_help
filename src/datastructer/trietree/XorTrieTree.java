@@ -1,4 +1,4 @@
-package datastructer;
+package datastructer.trietree;
 
 public class XorTrieTree {
     class TrieNode{

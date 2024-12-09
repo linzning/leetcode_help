@@ -1,22 +1,12 @@
-import datastructer.SegmentTree;
-import datastructer.SegmentTreeNode;
 import linklist.ListNode;
-import linklist.SkipList;
-import tree.binarytree.BinaryTreeNode;
 import tree.binarytree.TreeNode;
-import utils.BinarySearch;
-import utils.Utils;
-import utils.data.Counter;
+import utils.DataUtils;
 
-import java.awt.geom.Area;
-import java.security.PrivilegedExceptionAction;
-import java.sql.DriverAction;
 import java.util.*;
 
 class Solution {
-    public long countGood(int[] nums, int k) {
-        Counter<Integer>count=new Counter<>();
-
+    public char nextGreatestLetter(char[] letters, char target) {
+        return ' ';
     }
 }
 
@@ -24,8 +14,9 @@ public class Main {
     public static void main(String[] args) {
         init();
 //        Solution s = new Solution();
-//        long ans = s.countGood(num_int1_1, 2);
+//        char ans = s.nextGreatestLetter(char1_1,'a');
 //        System.out.println(ans);
+
     }
 
     static void init() {
@@ -38,30 +29,26 @@ public class Main {
     }
 
     static void init_list() {
-        list_int1_1 = Utils.changeS_list_1("[1,2]");
-        list_int2_1 = Utils.changeS_list_2("[[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]");
+        list_int1_1 = DataUtils.changeS_list_1("[1,2]");
+        list_int2_1 = DataUtils.changeS_list_2("[[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]");
     }
 
     static void init_nums() {
-        num_int1_1 = Utils.changeS_nums_1("[1,2,3,1,5,3,6]");
-        num_int1_2 = Utils.changeS_nums_1("[1,2]");
-        num_int2_1 = Utils.changeS_nums_2("[[0,9],[4,1],[5,7],[6,2],[7,4],[10,9]]");
-        num_int2_2 = Utils.changeS_nums_2("[[0,1],[1,0]]");
+        num_int1_1 = DataUtils.changeS_nums_1("[1,2,1,2,3]");
+        num_int1_2 = DataUtils.changeS_nums_1("[1,2]");
+        num_int2_1 = DataUtils.changeS_nums_2("[[0,9],[4,1],[5,7],[6,2],[7,4],[10,9]]");
+        num_int2_2 = DataUtils.changeS_nums_2("[[0,1],[1,0]]");
     }
 
     static void init_char() {
-        char1_1 = new char[]{'a', 'b'};
-        char2_1 = new char[][]{{'(', ')'}};
+        char1_1 = DataUtils.changeS_chararr_1("[\"c\", \"f\", \"j\"]");
+        char2_1 = DataUtils.changeS_chararr_2("[[\"c\", \"f\", \"j\"],[\"c\", \"f\", \"j\"]]");
     }
 
     static void init_string() {
-        {
-            list_string = new ArrayList<>();
-            list_string.add("E12");
-            list_string.add("1X1");
-            list_string.add("21S");
-        }
-        words = new String[]{"7"};
+        list_string_1=DataUtils.changeS_strlist_1("[\"ce\", \"ffg\", \"ja\"]");
+        list_string_2=DataUtils.chanegS_strlist_2("[[\"ce\", \"ffg\", \"ja\"],[\"ce\", \"ffg\", \"ja\"]]");
+        string_arr_1 = DataUtils.changeS_strarr_1("[\"ce\", \"ffg\", \"ja\"]");
     }
 
     static void init_listNode() {
@@ -88,8 +75,9 @@ public class Main {
     static char[] char1_1;
     static char[][] char2_1;
     /* string */
-    static List<String> list_string;
-    static String[] words;
+    static List<String> list_string_1;
+    static List<List<String>>list_string_2;
+    static String[] string_arr_1;
     /* 链表 */
     static ListNode head1;
     static ListNode head2;

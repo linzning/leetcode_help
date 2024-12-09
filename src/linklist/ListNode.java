@@ -1,6 +1,6 @@
 package linklist;
 
-import utils.Utils;
+import utils.DataUtils;
 
 import java.util.Random;
 
@@ -31,7 +31,7 @@ public class ListNode {
      * @return
      */
     public static ListNode buildList(String str) {
-        int[] listValues= Utils.changeS_nums_1(str);
+        int[] listValues= DataUtils.changeS_nums_1(str);
         if (listValues == null || listValues.length == 0)
             return null;
 

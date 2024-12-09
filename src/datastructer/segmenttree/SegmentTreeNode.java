@@ -1,6 +1,4 @@
-package datastructer;
-
-import org.w3c.dom.Node;
+package datastructer.segmenttree;
 
 public class SegmentTreeNode {
     SegmentTreeNode ls, rs;

@@ -1,6 +1,6 @@
 package tree.binarytree;
 
-import utils.Utils;
+import utils.DataUtils;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -42,7 +42,7 @@ public class TreeNode extends BinaryTreeNode {
      * @param str
      */
     public static TreeNode buildTree(String str){
-        int[]nodes= Utils.changeS_nums_1(str);
+        int[]nodes= DataUtils.changeS_nums_1(str);
         if(nodes==null||nodes.length==0)return null;
         TreeNode root = new TreeNode(nodes[0]);
         Queue<TreeNode> queue = new LinkedList<>();
