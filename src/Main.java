@@ -1,4 +1,5 @@
 import linklist.ListNode;
+import tree.binarytree.BinaryTreeNode;
 import tree.binarytree.TreeNode;
 import utils.DataUtils;
 
@@ -13,10 +14,9 @@ class Solution {
 public class Main {
     public static void main(String[] args) {
         init();
-//        Solution s = new Solution();
-//        char ans = s.nextGreatestLetter(char1_1,'a');
-//        System.out.println(ans);
-
+        Solution s = new Solution();
+        char ans = s.nextGreatestLetter(char1_1,'a');
+        System.out.println(ans);
     }
 
     static void init() {
@@ -60,7 +60,7 @@ public class Main {
 
     static void init_tree() {
         root = TreeNode.buildTree("[1, 2, -3, 3, 1]");
-        //BinaryTreeNode.printTree(root);
+        BinaryTreeNode.printTree(root);
     }
 
     /* list */

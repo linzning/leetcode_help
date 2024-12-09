@@ -2,6 +2,9 @@ package tree;
 
 import tree.binarytree.BinaryTreeNode;
 
+/**
+ * 二叉搜索树
+ */
 public class BinarySearchNode extends BinaryTreeNode {
     int val;
     BinarySearchNode left;
@@ -35,6 +38,12 @@ public class BinarySearchNode extends BinaryTreeNode {
         return root.val;
     }
 
+    /**
+     *
+     * @param root
+     * @param target
+     * @return
+     */
     public static boolean search(BinarySearchNode root, int target) {
         if (root == null) {
             return false;
@@ -48,6 +57,12 @@ public class BinarySearchNode extends BinaryTreeNode {
         }
     }
 
+    /**
+     * 插入值
+     * @param root
+     * @param value
+     * @return
+     */
     public BinarySearchNode insert(BinarySearchNode root, int value) {
         if (root == null) {
             return new BinarySearchNode(value);
@@ -64,7 +79,12 @@ public class BinarySearchNode extends BinaryTreeNode {
         return root;
     }
 
-    // 此处返回值为删除 value 后的新 root
+    /**
+     * 删除特定值节点
+     * @param root
+     * @param value
+     * @return 删除 value 后的新 root
+     */
     BinarySearchNode remove(BinarySearchNode root, int value) {
         if (root == null) {
             return root;
@@ -101,7 +121,11 @@ public class BinarySearchNode extends BinaryTreeNode {
         return root;
     }
 
-    // 此处以右子树的最小值为例
+    /**
+     * 找最小节点
+     * @param root
+     * @return
+     */
     BinarySearchNode findMinNode(BinarySearchNode root) {
         while (root.left != null) {
             root = root.left;
@@ -109,6 +133,12 @@ public class BinarySearchNode extends BinaryTreeNode {
         return root;
     }
 
+    /**
+     * 查找排名为v的元素
+     * @param root
+     * @param v
+     * @return
+     */
     int queryRank(BinarySearchNode root, int v) {
         if (root == null) return 0;
         if (root.val == v) return (root.left!=null ? root.left.size : 0) + 1;
@@ -117,6 +147,12 @@ public class BinarySearchNode extends BinaryTreeNode {
                 root.count;
     }
 
+    /**
+     * 查找第k大元素
+     * @param root
+     * @param k
+     * @return
+     */
     int querykth(BinarySearchNode root, int k) {
         if (root == null) return -1;  // 或者根据需求返回其他合适的值
         if (root.left!=null) {

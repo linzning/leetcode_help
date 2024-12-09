@@ -1,5 +1,14 @@
 package tree.binarytree;
 
+import utils.DataUtils;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+/**
+ * 二叉树父类
+ * 里面有创建和打印方法
+ */
 public class BinaryTreeNode {
     int val;
     BinaryTreeNode left;
@@ -24,6 +33,38 @@ public class BinaryTreeNode {
     public static int getTreeDepth(BinaryTreeNode root) {
         if(root==null)return 0;
         return 1+ Math.max(getTreeDepth(root.left), getTreeDepth(root.right));
+    }
+
+    /**
+     * 根据leetcode给出的树的列表形式（层序遍历，不存在的节点null）构造一个二叉树
+     * 注意,如果节点值为Integer.MIN_VALUE会创建失败
+     * @param str
+     */
+    public static TreeNode buildTree(String str){
+        str.replaceAll("null",String.valueOf(Integer.MIN_VALUE));
+        int[]nodes= DataUtils.changeS_nums_1(str);
+        if(nodes==null||nodes.length==0)return null;
+        TreeNode root = new TreeNode(nodes[0]);
+        Queue<BinaryTreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int index = 1;
+
+        while (!queue.isEmpty() && index < nodes.length) {
+            BinaryTreeNode current = queue.poll();
+            int leftValue = nodes[index++];
+            if (leftValue != Integer.MIN_VALUE) {
+                current.left = new TreeNode(leftValue);
+                queue.offer(current.left);
+            }
+            if (index < nodes.length) {
+                int rightValue = nodes[index++];
+                if (rightValue != Integer.MIN_VALUE) {
+                    current.right = new TreeNode(rightValue);
+                    queue.offer(current.right);
+                }
+            }
+        }
+        return root;
     }
 
     /**
