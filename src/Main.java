@@ -1,26 +1,23 @@
 import linklist.ListNode;
-import tree.binarytree.BinaryTreeNode;
 import tree.binarytree.TreeNode;
-import utils.BinarySearch;
-import utils.DataUtils;
+import utils.algorithm.BinarySearch;
+import utils.inout.DataUtils;
+import utils.inout.Printer;
 
 import java.util.*;
 
 class Solution {
-    public int b_search(char[]letters,char target){
-        int l=0,r=letters.length-1;
-        while (l<=r){
-            int mid=l+((r-l)>>1);
-            if(letters[mid]<=target){
-                l=mid+1;
-            }else{
-                r=mid-1;
-            }
+    public int[] successfulPairs(int[] spells, int[] potions, long success) {
+        Arrays.sort(potions);
+        int n=spells.length;
+        int m=potions.length;
+        int[]ans=new int[n];
+        for(int i=0;i<n;i++){
+            int s=spells[i];
+            int index=BinarySearch.binarySearch_intarr_l(potions,0,m-1,(int) Math.ceil(success*1.0/s));
+            ans[i]=m-1-(index+1)+1;
         }
-        return l>letters.length-1?0:l;
-    }
-    public char nextGreatestLetter(char[] letters, char target) {
-        return letters[b_search(letters,target)];
+        return ans;
     }
 }
 
@@ -28,8 +25,9 @@ public class Main {
     public static void main(String[] args) {
         init();
         Solution s = new Solution();
-        char ans = s.nextGreatestLetter(char1_1,'a');
-        System.out.println(ans);
+        int[] ans = s.successfulPairs(num_int1_1,num_int1_2,7L);
+        boolean a=true;
+        Printer.println(a);
 
     }
 
@@ -48,8 +46,8 @@ public class Main {
     }
 
     static void init_nums() {
-        num_int1_1 = DataUtils.changeS_nums_1("[1,1,2,2,3,5,6,6]");
-        num_int1_2 = DataUtils.changeS_nums_1("[1,2]");
+        num_int1_1 = DataUtils.changeS_nums_1("[5,1,3]");
+        num_int1_2 = DataUtils.changeS_nums_1("[1,2,3,4,5]");
         num_int2_1 = DataUtils.changeS_nums_2("[[0,9],[4,1],[5,7],[6,2],[7,4],[10,9]]");
         num_int2_2 = DataUtils.changeS_nums_2("[[0,1],[1,0]]");
     }

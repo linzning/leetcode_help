@@ -33,7 +33,7 @@ public class MyMath {
      * @param nums
      * @return
      */
-    public static int max_nums(int[]nums){
+    public static int max_intarr(int[]nums){
         return Arrays.stream(nums).max().orElse(-1);
     }
 
@@ -62,5 +62,23 @@ public class MyMath {
             }
         }
         return ans;
+    }
+
+    /**
+     * 向上去整，并强转整数
+     * @param a
+     * @return
+     */
+    private static long _ceil(double a){
+        return (long) Math.ceil(a);
+    }
+
+    /**
+     * 向下去整，并强转整数
+     * @param a
+     * @return
+     */
+    private static long _floor(double a){
+        return (long) Math.floor(a);
     }
 }

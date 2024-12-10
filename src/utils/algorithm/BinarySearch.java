@@ -1,4 +1,6 @@
-package utils;
+package utils.algorithm;
+
+import java.util.Arrays;
 
 public class BinarySearch {
     /**
@@ -9,6 +11,17 @@ public class BinarySearch {
      */
     public static int binarySearch(int[]arr,int key) {
         return binarySearch_intarr(arr, 0, arr.length-1,key);
+    }
+
+    /**
+     * java自带的二分查找，可以有int char long,这是演示用函数
+     * @param nums
+     * @param key
+     * @return 找到返回下标 ，否则返回-(插入点+1)
+     */
+    private static int _BinarySearch(int[]nums,int key){
+        return Arrays.binarySearch(nums,key);
+        // 如果<0 要求插入点就是~ans 也就是-ans-1;
     }
 
     /**

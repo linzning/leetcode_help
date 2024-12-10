@@ -1,6 +1,6 @@
 package tree.binarytree;
 
-import utils.DataUtils;
+import utils.inout.DataUtils;
 
 import java.util.LinkedList;
 import java.util.Queue;

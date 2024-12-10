@@ -1,10 +1,5 @@
 package tree.binarytree;
 
-import utils.DataUtils;
-
-import java.util.LinkedList;
-import java.util.Queue;
-
 /**
  * leetcode的二叉树节点
  */

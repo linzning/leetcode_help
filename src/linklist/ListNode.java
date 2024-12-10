@@ -1,6 +1,6 @@
 package linklist;
 
-import utils.DataUtils;
+import utils.inout.DataUtils;
 
 import java.util.Random;
 
