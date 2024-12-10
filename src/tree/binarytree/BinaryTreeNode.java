@@ -10,9 +10,9 @@ import java.util.Queue;
  * 里面有创建和打印方法
  */
 public class BinaryTreeNode {
-    int val;
-    BinaryTreeNode left;
-    BinaryTreeNode right;
+    protected int val;
+    protected BinaryTreeNode left;
+    protected BinaryTreeNode right;
 
     public BinaryTreeNode(){
         val=-1;

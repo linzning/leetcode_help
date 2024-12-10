@@ -30,7 +30,7 @@ public class BinarySearch {
      * @param l 包括
      * @param r 包括
      * @param key
-     * @return 找到返回下标，找不到返回-1
+     * @return 找到返回下标，找不到返回-(插入点+1)
      */
     public static int binarySearch_intarr(int[]arr,int l,int r,int key){
         while (l<=r){
@@ -43,7 +43,7 @@ public class BinarySearch {
                 r=mid-1;
             }
         }
-        return -1;
+        return -(l+1);
     }
 
     /**
@@ -52,7 +52,7 @@ public class BinarySearch {
      * @param l 包括在内
      * @param h 包括在内
      * @param key
-     * @return 找不到返回-1，否则返回最左侧相等的
+     * @return 找不到返回-(插入点+1)，否则返回最左侧相等的
      */
     public static int lowerBound_intarr(int[] arr, int l, int h, int key) {
         int low=l,high=h;
@@ -66,7 +66,7 @@ public class BinarySearch {
                 low = mid + 1;   // 在右半边继续查找
             }
         }
-        if(low>h||arr[low]!=key)return -1;
+        if(low>h||arr[low]!=key)return -(low+1);
         return low;
     }
     /**
@@ -75,7 +75,7 @@ public class BinarySearch {
      * @param l 包括在内
      * @param h 包括在内
      * @param key
-     * @return 找不到返回-1，否则返回最右侧相等的
+     * @return 找不到返回-(插入点+1)，否则返回最右侧相等的
      */
     public static int higherBound_intarr(int[] arr, int l, int h, int key) {
         int low=l,high=h;
@@ -89,7 +89,7 @@ public class BinarySearch {
                 low = mid + 1;   // 在右半边继续查找
             }
         }
-        if(high<l||arr[high]!=key)return -1;
+        if(high<l||arr[high]!=key)return -(low+1);
         return high;
     }
 
@@ -137,5 +137,26 @@ public class BinarySearch {
             }
         }
         return low>h?-1:low;
+    }
+
+    /**
+     * 查询区间[low,high]内元素个数
+     * @param arr
+     * @param l 原数组下标，包含
+     * @param h
+     * @param low 区间最小值，包含
+     * @param high
+     * @return
+     */
+    public static int countInRange(int[]arr,int l,int h,int low,int high){
+        int left=lowerBound_intarr(arr,l,h,low);
+        int right=higherBound_intarr(arr,l,h,high);
+        if(left<0){
+            left=-left-1;
+        }
+        if(right<0){
+            right=-right-1-1;
+        }
+        return right-left+1;
     }
 }

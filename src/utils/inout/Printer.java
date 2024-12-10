@@ -1,5 +1,6 @@
 package utils.inout;
 
+import datastructer.Counter;
 import linklist.ListNode;
 import tree.binarytree.BinaryTreeNode;
 
@@ -27,7 +28,7 @@ public class Printer {
         System.out.println(s);
     }
 
-    /* ----------------------数组--------------------------- */
+    /* --------------------------------数组-------------------------------- */
     /**
      * 所有类型的数组，依次调用toString
      * @param nums
@@ -36,25 +37,40 @@ public class Printer {
         System.out.println(Arrays.toString(nums));
     }
 
-    /* --------------------集合---------------------- */
-    /**
-     * set 和 list
-     * @param nums
-     */
-    public static void println(Collection<Object> nums){
+    public static void println(int[] nums){
+        System.out.println(Arrays.toString(nums));
+    }
+
+    public static void println(char[] nums){
+        System.out.println(Arrays.toString(nums));
+    }
+
+    public static void println(double[] nums){
+        System.out.println(Arrays.toString(nums));
+    }
+
+    /* --------------------------------集合--------------------------------- */
+    public static <T> void println(List<T> nums){
         System.out.println(nums);
     }
 
-    public static void println(Map<Object,Object>map){
+    public static <T>  void println(Set<T> nums){
+        System.out.println(nums);
+    }
+
+    public static <T,V>  void println(Map<T,V>map){
         System.out.println(map);
     }
 
-    /* --------------------类---------------------- */
+    /* ---------------------------------类---------------------------------- */
     public static <T extends BinaryTreeNode> void println(T root){
         BinaryTreeNode.printTree(root);
     }
 
     public static void println(ListNode head){
         ListNode.printList(head);
+    }
+    public static <T> void println(Counter<T>count){
+        System.out.println(count);
     }
 }

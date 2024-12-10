@@ -18,8 +18,13 @@ public class Counter<T> {
     private int negtive;
     private int zero;
 
+    /* ----------------------初始化--------------------------- */
     public Counter() {
         count = new HashMap<>();
+    }
+
+    public Counter(HashMap<T,Long>map){
+        count=map;
     }
 
     public Counter(int[] nums) {
@@ -56,6 +61,19 @@ public class Counter<T> {
         }
         return true;
     }
+
+    /**
+     * 合并另一个counter
+     * @param count
+     * @return
+     */
+    public void merge(Counter<T>count){
+        for(Map.Entry<T,Long>entry:count.getCounts().entrySet()){
+            this.count.merge(entry.getKey(), entry.getValue(), Long::sum);
+        }
+    }
+
+    /* ----------------------------增减------------------------ */
 
     public void add(int[]nums){
         for(int n:nums)add((T) Integer.valueOf(n));

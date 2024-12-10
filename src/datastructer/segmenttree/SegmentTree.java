@@ -3,6 +3,8 @@ package datastructer.segmenttree;
 /**
  * 堆存储的线段树，没有动态开点
  * 支持区间修改和区间增减
+ *
+ * 也可以归纳成node[]这样就用不到这么多数组了，数据都存在node中
  */
 public class SegmentTree {
     private int MAXN;
@@ -32,7 +34,7 @@ public class SegmentTree {
      * 初始化sum数组的递归方法
      * @param l arr左下标，包含
      * @param r arr右下标，包含
-     * @param rt 这个范围在sum中的下标
+     * @param rt 这个范围在sum中的下标,一般从1开始
      */
     public void build(int l, int r, int rt) {
         if (l == r) {

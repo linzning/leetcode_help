@@ -4,20 +4,28 @@ import tree.binarytree.BinaryTreeNode;
 
 /**
  * 二叉搜索树
+ * 纯屎，不如用TreeSet,TreeMap
  */
-public class BinarySearchNode extends BinaryTreeNode {
+public class BinarySearchNode {
     int val;
     BinarySearchNode left;
     BinarySearchNode right;
-    int size;   // 当前节点为根的子树大小
-    int count;  // 当前节点的重复数量
-    BinarySearchNode(int val){
-        super(val);
+    int size;   // 当前节点为根的子树大小,包括当前节点
+    int count;  // 当前节点的重复数量,没有重复是0
+    public BinarySearchNode(int val){
+        this.val=val;
     }
-    BinarySearchNode(int val, BinarySearchNode left, BinarySearchNode right){
-        super(val,left,right);
+    public BinarySearchNode(int val, BinarySearchNode left, BinarySearchNode right){
+        this.val=val;
+        this.left=left;
+        this.right=right;
     }
 
+    /**
+     * 求最小值
+     * @param root
+     * @return
+     */
     public static int getMin(BinarySearchNode root) {
         if (root == null) {
             return -1;
@@ -28,6 +36,11 @@ public class BinarySearchNode extends BinaryTreeNode {
         return root.val;
     }
 
+    /**
+     * 求最大值
+     * @param root
+     * @return
+     */
     public static int getMax(BinarySearchNode root) {
         if (root == null) {
             return -1;
@@ -39,7 +52,7 @@ public class BinarySearchNode extends BinaryTreeNode {
     }
 
     /**
-     *
+     * 是否存在target
      * @param root
      * @param target
      * @return
@@ -63,7 +76,7 @@ public class BinarySearchNode extends BinaryTreeNode {
      * @param value
      * @return
      */
-    public BinarySearchNode insert(BinarySearchNode root, int value) {
+    public static BinarySearchNode insert(BinarySearchNode root, int value) {
         if (root == null) {
             return new BinarySearchNode(value);
         }
@@ -80,7 +93,7 @@ public class BinarySearchNode extends BinaryTreeNode {
     }
 
     /**
-     * 删除特定值节点
+     * 删除一个特定值
      * @param root
      * @param value
      * @return 删除 value 后的新 root
@@ -134,6 +147,18 @@ public class BinarySearchNode extends BinaryTreeNode {
     }
 
     /**
+     * 找最大节点
+     * @param root
+     * @return
+     */
+    BinarySearchNode findMaxNode(BinarySearchNode root) {
+        while (root.left != null) {
+            root = root.left;
+        }
+        return root;
+    }
+
+    /**
      * 查找排名为v的元素
      * @param root
      * @param v
@@ -163,5 +188,113 @@ public class BinarySearchNode extends BinaryTreeNode {
         }
         return querykth(root.right,
                 k - (root.left!=null ? root.left.size : 0) - root.count);
+    }
+
+    /* ---------------------区间查询元素个数----------------------- */
+
+    /**
+     * 查询>key的元素个数
+     * @param root
+     * @param target
+     * @return
+     */
+     public static int countGreater(BinarySearchNode root,int target){
+        if (root == null) {
+            return 0;
+        }
+        if (root.val == target) {
+            return root.right==null?0:root.right.size;
+        } else if (target < root.val) {
+            return root.count+1+countGreater(root.left,target)+(root.right==null?0:root.right.size);
+        } else {
+            return countGreater(root.right,target);
+        }
+    }
+
+    /**
+     * 查询>=key的元素个数
+     * @param root
+     * @param target
+     * @return
+     */
+    public static int countGreaterEqual(BinarySearchNode root,int target){
+        if (root == null) {
+            return 0;
+        }
+        if (root.val == target) {
+            return root.count+1+(root.right==null?0:root.right.size);
+        } else if (target < root.val) {
+            return root.count+1+countGreaterEqual(root.left,target)+(root.right==null?0:root.right.size);
+        } else {
+            return countGreaterEqual(root.right,target);
+        }
+    }
+
+    /**
+     * 查询<key的元素个数
+     * @param root
+     * @param target
+     * @return
+     */
+    public static int countLower(BinarySearchNode root,int target){
+        if (root == null) {
+            return 0;
+        }
+        if (root.val == target) {
+            return root.left==null?0:root.left.size;
+        } else if (target > root.val) {
+            return root.count+1+countLower(root.right,target)+(root.left==null?0:root.left.size);
+        } else {
+            return countLower(root.left,target);
+        }
+    }
+
+    /**
+     * 查询<=key的元素个数
+     * @param root
+     * @param target
+     * @return
+     */
+    public static int countLowerEqual(BinarySearchNode root,int target){
+        if (root == null) {
+            return 0;
+        }
+        if (root.val == target) {
+            return root.count+1+(root.left==null?0:root.left.size);
+        } else if (target > root.val) {
+            return root.count+1+countLowerEqual(root.right,target)+(root.left==null?0:root.left.size);
+        } else {
+            return countLowerEqual(root.left,target);
+        }
+    }
+
+    /**
+     * 求[low,high]内的元素个数
+     * @param root
+     * @param low
+     * @param high
+     * @return
+     */
+    public static int countInRange(BinarySearchNode root, int low,int high){
+        if (root == null) {
+            return 0;
+        }
+
+        // 如果当前节点的值小于区间的下界，递归右子树
+        if (root.val < low) {
+            return countInRange(root.right, low, high);
+        }
+
+        // 如果当前节点的值大于区间的上界，递归左子树
+        if (root.val > high) {
+            return countInRange(root.left, low, high);
+        }
+
+        // 当前节点的值在区间内，返回当前节点的重复数量 + 左右子树的计数
+        int count = root.count+1; // 当前节点的重复数量
+        count += countInRange(root.left, low, high);  // 递归左子树
+        count += countInRange(root.right, low, high); // 递归右子树
+
+        return count;
     }
 }

@@ -1,4 +1,6 @@
+import datastructer.Counter;
 import linklist.ListNode;
+import tree.BinarySearchNode;
 import tree.binarytree.TreeNode;
 import utils.algorithm.BinarySearch;
 import utils.inout.DataUtils;
@@ -7,28 +9,21 @@ import utils.inout.Printer;
 import java.util.*;
 
 class Solution {
-    public int[] successfulPairs(int[] spells, int[] potions, long success) {
-        Arrays.sort(potions);
-        int n=spells.length;
-        int m=potions.length;
-        int[]ans=new int[n];
-        for(int i=0;i<n;i++){
-            int s=spells[i];
-            int index=BinarySearch.binarySearch_intarr_l(potions,0,m-1,(int) Math.ceil(success*1.0/s));
-            ans[i]=m-1-(index+1)+1;
-        }
-        return ans;
+    public int minLengthAfterRemovals(List<Integer> nums) {
+
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        init();
         Solution s = new Solution();
-        int[] ans = s.successfulPairs(num_int1_1,num_int1_2,7L);
-        boolean a=true;
-        Printer.println(a);
+        long ans = s.minLengthAfterRemovals(list_int1_1);
+        Printer.println(ans);
 
+    }
+
+    static {
+        init();
     }
 
     static void init() {
@@ -46,7 +41,7 @@ public class Main {
     }
 
     static void init_nums() {
-        num_int1_1 = DataUtils.changeS_nums_1("[5,1,3]");
+        num_int1_1 = DataUtils.changeS_nums_1("[0,1,7,4,4,5]");
         num_int1_2 = DataUtils.changeS_nums_1("[1,2,3,4,5]");
         num_int2_1 = DataUtils.changeS_nums_2("[[0,9],[4,1],[5,7],[6,2],[7,4],[10,9]]");
         num_int2_2 = DataUtils.changeS_nums_2("[[0,1],[1,0]]");
@@ -58,8 +53,8 @@ public class Main {
     }
 
     static void init_string() {
-        list_string_1=DataUtils.changeS_strlist_1("[\"ce\", \"ffg\", \"ja\"]");
-        list_string_2=DataUtils.chanegS_strlist_2("[[\"ce\", \"ffg\", \"ja\"],[\"ce\", \"ffg\", \"ja\"]]");
+        list_string_1 = DataUtils.changeS_strlist_1("[\"ce\", \"ffg\", \"ja\"]");
+        list_string_2 = DataUtils.chanegS_strlist_2("[[\"ce\", \"ffg\", \"ja\"],[\"ce\", \"ffg\", \"ja\"]]");
         string_arr_1 = DataUtils.changeS_strarr_1("[\"ce\", \"ffg\", \"ja\"]");
     }
 
@@ -88,7 +83,7 @@ public class Main {
     static char[][] char2_1;
     /* string */
     static List<String> list_string_1;
-    static List<List<String>>list_string_2;
+    static List<List<String>> list_string_2;
     static String[] string_arr_1;
     /* 链表 */
     static ListNode head1;
