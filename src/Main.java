@@ -1,13 +1,26 @@
 import linklist.ListNode;
 import tree.binarytree.BinaryTreeNode;
 import tree.binarytree.TreeNode;
+import utils.BinarySearch;
 import utils.DataUtils;
 
 import java.util.*;
 
 class Solution {
+    public int b_search(char[]letters,char target){
+        int l=0,r=letters.length-1;
+        while (l<=r){
+            int mid=l+((r-l)>>1);
+            if(letters[mid]<=target){
+                l=mid+1;
+            }else{
+                r=mid-1;
+            }
+        }
+        return l>letters.length-1?0:l;
+    }
     public char nextGreatestLetter(char[] letters, char target) {
-        return ' ';
+        return letters[b_search(letters,target)];
     }
 }
 
@@ -17,6 +30,7 @@ public class Main {
         Solution s = new Solution();
         char ans = s.nextGreatestLetter(char1_1,'a');
         System.out.println(ans);
+
     }
 
     static void init() {
@@ -34,7 +48,7 @@ public class Main {
     }
 
     static void init_nums() {
-        num_int1_1 = DataUtils.changeS_nums_1("[1,2,1,2,3]");
+        num_int1_1 = DataUtils.changeS_nums_1("[1,1,2,2,3,5,6,6]");
         num_int1_2 = DataUtils.changeS_nums_1("[1,2]");
         num_int2_1 = DataUtils.changeS_nums_2("[[0,9],[4,1],[5,7],[6,2],[7,4],[10,9]]");
         num_int2_2 = DataUtils.changeS_nums_2("[[0,1],[1,0]]");
@@ -60,7 +74,7 @@ public class Main {
 
     static void init_tree() {
         root = TreeNode.buildTree("[1, 2, -3, 3, 1]");
-        BinaryTreeNode.printTree(root);
+        //BinaryTreeNode.printTree(root);
     }
 
     /* list */
