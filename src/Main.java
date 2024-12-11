@@ -9,15 +9,20 @@ import utils.inout.Printer;
 import java.util.*;
 
 class Solution {
-    public int minLengthAfterRemovals(List<Integer> nums) {
 
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        int index=Arrays.binarySearch(arr,x);
+        if(index<0)index=~index;
+        int i=index,j=index+1;
+        return null;
     }
 }
+
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        long ans = s.minLengthAfterRemovals(list_int1_1);
+        List<Integer> ans = s.findClosestElements(num_int1_1,4,3);
         Printer.println(ans);
 
     }
@@ -41,7 +46,7 @@ public class Main {
     }
 
     static void init_nums() {
-        num_int1_1 = DataUtils.changeS_nums_1("[0,1,7,4,4,5]");
+        num_int1_1 = DataUtils.changeS_nums_1("[1,2,3,4,5]");
         num_int1_2 = DataUtils.changeS_nums_1("[1,2,3,4,5]");
         num_int2_1 = DataUtils.changeS_nums_2("[[0,9],[4,1],[5,7],[6,2],[7,4],[10,9]]");
         num_int2_2 = DataUtils.changeS_nums_2("[[0,1],[1,0]]");
