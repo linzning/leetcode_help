@@ -9,6 +9,7 @@ public class Sort {
      */
     private static void _sort_2_n(int[][]nums){
         //按第二维第一位升序
+        //Arrays.sort也只能对非基本数据类型使用，不然只能简单的升序或降序
         Arrays.sort(nums,(a,b)->a[0]-b[0]);
     }
 

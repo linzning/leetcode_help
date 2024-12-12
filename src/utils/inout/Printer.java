@@ -29,14 +29,6 @@ public class Printer {
     }
 
     /* --------------------------------数组-------------------------------- */
-    /**
-     * 所有类型的数组，依次调用toString
-     * @param nums
-     */
-    public static void println(Object[] nums){
-        System.out.println(Arrays.toString(nums));
-    }
-
     public static void println(int[] nums){
         System.out.println(Arrays.toString(nums));
     }
@@ -46,6 +38,20 @@ public class Printer {
     }
 
     public static void println(double[] nums){
+        System.out.println(Arrays.toString(nums));
+    }
+
+    public static void println(int[][] nums){
+        for(int[]n:nums){
+            System.out.println(Arrays.toString(n));
+        }
+    }
+
+    /**
+     * 所有类型的数组，依次调用toString
+     * @param nums
+     */
+    public static void println(Object[] nums){
         System.out.println(Arrays.toString(nums));
     }
 

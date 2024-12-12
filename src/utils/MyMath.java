@@ -37,6 +37,10 @@ public class MyMath {
         return Arrays.stream(nums).max().orElse(-1);
     }
 
+    public static int max_intMulti(int... nums){
+        return Arrays.stream(nums).max().orElse(-1);
+    }
+
     /**
      * 素数计数
      * @param n
@@ -65,20 +69,36 @@ public class MyMath {
     }
 
     /**
-     * 向上去整，并强转整数
-     * @param a
+     * 求最低位的1
+     * @param num
      * @return
      */
-    private static long _ceil(double a){
-        return (long) Math.ceil(a);
+    public static int lowBit(int num){
+        return num&-num;
     }
 
     /**
-     * 向下去整，并强转整数
+     * 10进制数字转二进制字符串
+     * @param num
+     * @return
+     */
+    public static String int10_2(int num){
+        StringBuilder sb=new StringBuilder();
+        while (num>0){
+            sb.append(num%2);
+            num/=2;
+        }
+        // Long.toBinaryString(num); Java自带的转二进制字符串
+        // Integer也有
+        return sb.reverse().toString();
+    }
+
+    /**
+     * java有自带的bitCount函数
      * @param a
      * @return
      */
-    private static long _floor(double a){
-        return (long) Math.floor(a);
+    private static int _bitCount(int a){
+        return Long.bitCount(a);
     }
 }

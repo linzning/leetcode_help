@@ -1,7 +1,10 @@
 import datastructer.Counter;
+import datastructer.UnionFind;
+import graph.DFS;
 import linklist.ListNode;
 import tree.BinarySearchNode;
 import tree.binarytree.TreeNode;
+import utils.MyMath;
 import utils.algorithm.BinarySearch;
 import utils.inout.DataUtils;
 import utils.inout.Printer;
@@ -9,47 +12,140 @@ import utils.inout.Printer;
 import java.util.*;
 
 class Solution {
+    class UnionFind {
+        public int[]parents;//记录每个元素的父节点
 
-    public List<Integer> findClosestElements(int[] arr, int k, int x) {
-        int index=Arrays.binarySearch(arr,x);
-        if(index<0)index=~index;
-        int i=index,j=index+1;
-        return null;
+        public int[]size;// 记录每个集合的大小
+        public int[]edges;// 记录每个集合边的大小
+        public boolean[]isKnown;
+        public int MAXN;
+
+        /**
+         * 初始化并查集
+         * @param n 节点数目
+         */
+        public UnionFind(int n){
+            MAXN=n;
+            parents=new int[n];
+            size=new int[n];
+            edges=new int[n];
+            isKnown=new boolean[n];
+            Arrays.fill(edges,0);
+            Arrays.fill(size,1);
+            // 初始化时所有parent都是自己
+            for(int i=0;i<n;i++){
+                parents[i]=i;
+            }
+        }
+
+        /**
+         * 查找所属集合
+         * @param x
+         * @return
+         */
+        public int find(int x) {
+            if (parents[x] == x) {
+                return x;
+            }
+            // 路径压缩优化
+            parents[x] = find(parents[x]);
+            return parents[x];
+        }
+
+        /**
+         * 按集合大小合并
+         * @param i
+         * @param j
+         */
+        public void mergeBySize(int i,int j){
+            int x=find(i),y=find(j);
+            if(isKnown[x]||isKnown[y]){
+                isKnown[x]=isKnown[y]=true;
+                ans.add(i);
+                ans.add(j);
+                if(x==y){
+                    edges[x]++;
+                    return;
+                }
+                if(size[x]<size[y]){
+                    parents[x]=y;
+                    size[y]+=size[x];
+                    edges[y]+=edges[x]+1;
+                }
+                else{
+                    parents[y]=x;
+                    size[x]+=size[y];
+                    edges[x]+=edges[y]+1;
+                }
+            }
+        }
+
+        public int getSize(int i){
+            return size[i];
+        }
+
+        /**
+         * 返回map的string  集合号->节点列表
+         * @return
+         */
+        @Override
+        public String toString(){
+            HashMap<Integer, List<Integer>>map=new HashMap<>();//集合号->节点列表
+            HashMap<Integer,Integer>mapSize=new HashMap<>();
+            for(int i=0;i<MAXN;i++){
+                int setNum=find(i);
+                List<Integer>nodeList=map.getOrDefault(setNum,new ArrayList<>());
+                nodeList.add(i);
+                map.put(setNum,nodeList);
+                mapSize.put(setNum,getSize(setNum));
+            }
+            return map.toString()+mapSize.toString();
+        }
+    }
+
+    public List<Integer> findAllPeople(int n, int[][] meetings, int firstPerson) {
+        // 建图
+        HashMap<Integer,List<int[]>>time_meet=new HashMap<>();//time->多个会议双方
+        TreeSet<Integer>timeList=new TreeSet<>();//时间序列
+        for(int[]m:meetings){
+            List<int[]>meets=time_meet.getOrDefault(m[2],new ArrayList<>());
+            meets.add(new int[]{m[0],m[1]});
+            time_meet.put(m[2],meets);
+            timeList.add(m[2]);
+        }
+        ans=new HashSet<>();
+        UnionFind uf=new UnionFind(n);
+        uf.isKnown[0]=true;
+        uf.isKnown[firstPerson]=true;
+        uf.mergeBySize(0,firstPerson);
+        for(int time:timeList){
+            List<int[]>meets=time_meet.get(time);
+            for(int[]meet:meets){
+                uf.mergeBySize(meet[0],meet[1]);
+            }
+        }
+        return new ArrayList<>(){{
+            addAll(ans);
+        }};
     }
 }
-
-
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        List<Integer> ans = s.findClosestElements(num_int1_1,4,3);
+        var ans = s.findAllPeople(5,num_int2_1,3);
         Printer.println(ans);
 
     }
-
-    static {
-        init();
-    }
-
-    static void init() {
-        init_list();
-        init_nums();
-        init_char();
-        init_string();
-        init_listNode();
-        init_tree();
+    static void init_nums() {
+        num_int1_1 = DataUtils.changeS_nums_1("[3,7]");
+        num_int1_2 = DataUtils.changeS_nums_1("[3,1,2,4]");
+        num_int2_1 = DataUtils.changeS_nums_2("[[1,4,3],[0,4,3]]");
+        num_int2_2 = DataUtils.changeS_nums_2("[[0,1],[1,0]]");
     }
 
     static void init_list() {
         list_int1_1 = DataUtils.changeS_list_1("[1,2]");
-        list_int2_1 = DataUtils.changeS_list_2("[[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]");
-    }
-
-    static void init_nums() {
-        num_int1_1 = DataUtils.changeS_nums_1("[1,2,3,4,5]");
-        num_int1_2 = DataUtils.changeS_nums_1("[1,2,3,4,5]");
-        num_int2_1 = DataUtils.changeS_nums_2("[[0,9],[4,1],[5,7],[6,2],[7,4],[10,9]]");
-        num_int2_2 = DataUtils.changeS_nums_2("[[0,1],[1,0]]");
+        list_int2_1 = DataUtils.changeS_list_2("[[1,2],[4,2],[1,3],[5,2]]");
     }
 
     static void init_char() {
@@ -97,6 +193,18 @@ public class Main {
     static ListNode[] lists;
     /* tree */
     static TreeNode root;
+    static {
+        init();
+    }
+
+    static void init() {
+        init_list();
+        init_nums();
+        init_char();
+        init_string();
+        init_listNode();
+        init_tree();
+    }
 }
 
 
