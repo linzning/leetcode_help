@@ -12,94 +12,37 @@ import utils.inout.Printer;
 import java.util.*;
 
 class Solution {
-    class UnionFind {
-        public int[]parents;//记录每个元素的父节点
-
-        public int[]size;// 记录每个集合的大小
-        public int[]edges;// 记录每个集合边的大小
-        public boolean[]isKnown;
-        public int MAXN;
-
-        /**
-         * 初始化并查集
-         * @param n 节点数目
-         */
-        public UnionFind(int n){
+    class UnionFind{
+        int MAXN;
+        int[]parents;
+        UnionFind(int n){
             MAXN=n;
             parents=new int[n];
-            size=new int[n];
-            edges=new int[n];
-            isKnown=new boolean[n];
-            Arrays.fill(edges,0);
-            Arrays.fill(size,1);
-            // 初始化时所有parent都是自己
             for(int i=0;i<n;i++){
                 parents[i]=i;
             }
         }
-
-        /**
-         * 查找所属集合
-         * @param x
-         * @return
-         */
-        public int find(int x) {
-            if (parents[x] == x) {
-                return x;
-            }
-            // 路径压缩优化
-            parents[x] = find(parents[x]);
-            return parents[x];
+        int find(int x){
+            if (parents[x] == x)return x;
+            return parents[x] = find(parents[x]);
         }
-
-        /**
-         * 按集合大小合并
-         * @param i
-         * @param j
-         */
-        public void mergeBySize(int i,int j){
-            int x=find(i),y=find(j);
-            if(isKnown[x]||isKnown[y]){
-                isKnown[x]=isKnown[y]=true;
-                ans.add(i);
-                ans.add(j);
-                if(x==y){
-                    edges[x]++;
-                    return;
-                }
-                if(size[x]<size[y]){
-                    parents[x]=y;
-                    size[y]+=size[x];
-                    edges[y]+=edges[x]+1;
-                }
-                else{
-                    parents[y]=x;
-                    size[x]+=size[y];
-                    edges[x]+=edges[y]+1;
-                }
-            }
+        void merge(int i,int j){
+            int pi=find(i),pj=find(j);
+            if(pi!=pj)parents[pi]=pj;
         }
-
-        public int getSize(int i){
-            return size[i];
+        void erase(int x){
+            parents[x]=x;
         }
-
-        /**
-         * 返回map的string  集合号->节点列表
-         * @return
-         */
         @Override
         public String toString(){
             HashMap<Integer, List<Integer>>map=new HashMap<>();//集合号->节点列表
-            HashMap<Integer,Integer>mapSize=new HashMap<>();
             for(int i=0;i<MAXN;i++){
                 int setNum=find(i);
                 List<Integer>nodeList=map.getOrDefault(setNum,new ArrayList<>());
                 nodeList.add(i);
                 map.put(setNum,nodeList);
-                mapSize.put(setNum,getSize(setNum));
             }
-            return map.toString()+mapSize.toString();
+            return map.toString();
         }
     }
 
@@ -113,33 +56,41 @@ class Solution {
             time_meet.put(m[2],meets);
             timeList.add(m[2]);
         }
-        ans=new HashSet<>();
         UnionFind uf=new UnionFind(n);
-        uf.isKnown[0]=true;
-        uf.isKnown[firstPerson]=true;
-        uf.mergeBySize(0,firstPerson);
+        uf.merge(firstPerson,0);
         for(int time:timeList){
             List<int[]>meets=time_meet.get(time);
             for(int[]meet:meets){
-                uf.mergeBySize(meet[0],meet[1]);
+                uf.merge(meet[0],meet[1]);
+            }
+            for(int[]meet:meets){
+                if(uf.find(meet[0])!= uf.find(0)){
+                    uf.erase(meet[0]);
+                    uf.erase(meet[1]);
+                }
             }
         }
-        return new ArrayList<>(){{
-            addAll(ans);
-        }};
+        List<Integer>ans=new LinkedList<>();
+        ans.add(0);
+        for(int i=1;i<n;i++){
+            if(uf.find(i)==uf.find(0)){
+                ans.add(i);
+            }
+        }
+        return ans;
     }
 }
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        var ans = s.findAllPeople(5,num_int2_1,3);
+        var ans = s.findAllPeople(6,num_int2_1,1);
         Printer.println(ans);
 
     }
     static void init_nums() {
         num_int1_1 = DataUtils.changeS_nums_1("[3,7]");
         num_int1_2 = DataUtils.changeS_nums_1("[3,1,2,4]");
-        num_int2_1 = DataUtils.changeS_nums_2("[[1,4,3],[0,4,3]]");
+        num_int2_1 = DataUtils.changeS_nums_2("[[1,2,5],[2,3,8],[1,5,10]]");
         num_int2_2 = DataUtils.changeS_nums_2("[[0,1],[1,0]]");
     }
 

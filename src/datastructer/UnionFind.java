@@ -49,7 +49,32 @@ public class UnionFind {
      */
     public void merge(int i,int j){
         int x=find(i),y=find(j);
-        parents[x]=y;
+        if(x!=y){
+            parents[x]=y;
+        }
+    }
+
+    /**
+     * 从所属集合中删除，也就是独自为集
+     * @param i
+     */
+    public void erase(int i){
+        size[find(i)]--;
+        // 边应该没法动
+        parents[i]=i;
+    }
+
+    /**
+     * 将节点i移动到节点j所属集合
+     * @param i
+     * @param j
+     */
+    public void move(int i,int j){
+        int pi=find(i),pj=find(j);
+        if(pi==pj)return;
+        parents[i]=pj;
+        size[pi]--;
+        size[pj]++;
     }
 
     /**
