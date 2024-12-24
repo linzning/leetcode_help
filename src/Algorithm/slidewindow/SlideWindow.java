@@ -1,4 +1,4 @@
-package slidewindow;
+package Algorithm.slidewindow;
 
 import java.util.HashSet;
 

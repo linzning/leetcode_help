@@ -47,6 +47,7 @@ public class Printer {
         }
     }
 
+
     /**
      * 所有类型的数组，依次调用toString
      * @param nums

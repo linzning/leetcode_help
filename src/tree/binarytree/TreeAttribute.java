@@ -37,7 +37,7 @@ public class TreeAttribute {
     }
 
     /**
-     * 获取树的直径
+     * 获取树的直径,不一定经过root
      * @param root
      * @return
      */
