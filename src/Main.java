@@ -5,24 +5,37 @@ import utils.inout.DataUtils;
 import utils.inout.Printer;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 
 class Solution {
-    public int countDistinct(int[] nums, int k, int p) {
-
+    public long maximumOr(int[] nums, int k) {
+        // 选一个数左移k次
+        int n=nums.length;
+        int[]suf=new int[n+1];
+        for(int i=n-1;i>=0;i--){
+            suf[i]=suf[i+1]|nums[i];
+        }
+        long pre=0;
+        long ans=0;
+        for(int i=0;i<n-1;i++){
+            ans=Math.max(ans,(long) pre|nums[i]|suf[i+1]);
+            pre|=nums[i];
+        }
+        return ans;
     }
 }
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        var ans = s.sumPrefixScores(arr_string1_1);
-        Printer.println((int[]) ans);
+        var ans = s.longestNiceSubarray(arr_int1_1);
+        Printer.println(ans);
 
     }
 
     static void init_nums() {
-        arr_int1_1 = DataUtils.changeS_nums_1("[2,5,5,1,2,20]");
+        arr_int1_1 = DataUtils.changeS_nums_1("[1,3,8,48,10]");
         arr_int1_2 = DataUtils.changeS_nums_1("[2,-6,4,-5,-3,2,-7]");
         arr_int2_1 = DataUtils.changeS_nums_2("[[0,1],[1,2]]]");
         arr_int2_2 = DataUtils.changeS_nums_2("[[2,1],[3,2]]");
@@ -49,7 +62,7 @@ public class Main {
     }
 
     static void init_listNode() {
-        head1 = ListNode.buildList("[1, 2, -3, 3, 1]");
+        head1 = ListNode.buildList("[2,1,5]");
         head2 = ListNode.buildList("[1, 2, -3, 3, 1]");
         head3 = ListNode.buildList("[1, 2, -3, 3, 1]");
         lists = new ListNode[]{head1, head2, head3};

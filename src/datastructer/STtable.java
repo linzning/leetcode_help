@@ -43,7 +43,7 @@ public class STtable {
 
     /**
      * 求区间最大值
-     * @param l
+     * @param l 包括，从1开始计数下标
      * @param r
      * @return
      */
