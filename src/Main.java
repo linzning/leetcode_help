@@ -1,3 +1,4 @@
+import Algorithm.slidewindow.DoubleStack;
 import datastructer.trietree.TrieMap;
 import linklist.ListNode;
 import tree.binarytree.TreeNode;
@@ -9,33 +10,22 @@ import java.util.stream.IntStream;
 
 
 class Solution {
-    public long maximumOr(int[] nums, int k) {
-        // 选一个数左移k次
-        int n=nums.length;
-        int[]suf=new int[n+1];
-        for(int i=n-1;i>=0;i--){
-            suf[i]=suf[i+1]|nums[i];
-        }
-        long pre=0;
-        long ans=0;
-        for(int i=0;i<n-1;i++){
-            ans=Math.max(ans,(long) pre|nums[i]|suf[i+1]);
-            pre|=nums[i];
-        }
-        return ans;
+    public int largestRectangleArea(int[] heights) {
+
     }
 }
 
 public class Main {
+
     public static void main(String[] args) {
         Solution s = new Solution();
-        var ans = s.longestNiceSubarray(arr_int1_1);
+        var ans = s.closestToTarget(arr_int1_1, 5);
         Printer.println(ans);
 
     }
 
     static void init_nums() {
-        arr_int1_1 = DataUtils.changeS_nums_1("[1,3,8,48,10]");
+        arr_int1_1 = DataUtils.changeS_nums_1("[9,12,3,7,15");
         arr_int1_2 = DataUtils.changeS_nums_1("[2,-6,4,-5,-3,2,-7]");
         arr_int2_1 = DataUtils.changeS_nums_2("[[0,1],[1,2]]]");
         arr_int2_2 = DataUtils.changeS_nums_2("[[2,1],[3,2]]");
