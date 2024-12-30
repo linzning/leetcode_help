@@ -1,7 +1,9 @@
 import Algorithm.slidewindow.DoubleStack;
 import datastructer.trietree.TrieMap;
+import graph.MST.Prim;
 import linklist.ListNode;
 import tree.binarytree.TreeNode;
+import utils.MyMath;
 import utils.inout.DataUtils;
 import utils.inout.Printer;
 
@@ -10,24 +12,34 @@ import java.util.stream.IntStream;
 
 
 class Solution {
-    public int largestRectangleArea(int[] heights) {
-
+    int dist(int[][]points,int a,int b){
+        return Math.abs(points[a][0]-points[b][0])+Math.abs(points[a][1]-points[b][1]);
+    }
+    public int minCostConnectPoints(int[][] points) {
+        int n=points.length;
+        int[][]grpah=new int[n][n];
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                int dist=dist(points,i,j);
+                grpah[i][j]=grpah[j][i]=dist;
+            }
+        }
+        Prim p=new Prim(n,grpah);
+        return p.getMST(0);
     }
 }
-
 public class Main {
-
     public static void main(String[] args) {
         Solution s = new Solution();
-        var ans = s.closestToTarget(arr_int1_1, 5);
+        var ans = s.minCostConnectPoints(arr_int2_1);
         Printer.println(ans);
 
     }
 
     static void init_nums() {
-        arr_int1_1 = DataUtils.changeS_nums_1("[9,12,3,7,15");
+        arr_int1_1 = DataUtils.changeS_nums_1("[62,100,4]");
         arr_int1_2 = DataUtils.changeS_nums_1("[2,-6,4,-5,-3,2,-7]");
-        arr_int2_1 = DataUtils.changeS_nums_2("[[0,1],[1,2]]]");
+        arr_int2_1 = DataUtils.changeS_nums_2("[[0,0],[2,2],[3,10],[5,2],[7,0]]");
         arr_int2_2 = DataUtils.changeS_nums_2("[[2,1],[3,2]]");
     }
 

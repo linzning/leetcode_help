@@ -41,6 +41,10 @@ public class MyMath {
         return Arrays.stream(nums).max().orElse(-1);
     }
 
+    public static int min_intMulti(int... nums){
+        return Arrays.stream(nums).min().orElse(-1);
+    }
+
     /**
      * 素数计数
      * @param n
