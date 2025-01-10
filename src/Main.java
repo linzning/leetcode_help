@@ -1,4 +1,5 @@
 import Algorithm.slidewindow.DoubleStack;
+import datastructer.STtable;
 import datastructer.trietree.TrieMap;
 import graph.MST.Prim;
 import linklist.ListNode;
@@ -8,45 +9,44 @@ import utils.inout.DataUtils;
 import utils.inout.Printer;
 
 import java.util.*;
-import java.util.stream.IntStream;
-
 
 class Solution {
-    int dist(int[][]points,int a,int b){
-        return Math.abs(points[a][0]-points[b][0])+Math.abs(points[a][1]-points[b][1]);
-    }
-    public int minCostConnectPoints(int[][] points) {
-        int n=points.length;
-        int[][]grpah=new int[n][n];
-        for(int i=0;i<n;i++){
-            for(int j=i+1;j<n;j++){
-                int dist=dist(points,i,j);
-                grpah[i][j]=grpah[j][i]=dist;
-            }
+    public boolean isZeroArray(int[] nums, int[][] queries) {
+        int n=nums.length;
+        int[]diff=new int[n];
+        for(int[]q:queries){
+            int num=q[2];
+            diff[q[0]]+=num;
+            diff[q[1]+1]-=num;
         }
-        Prim p=new Prim(n,grpah);
-        return p.getMST(0);
+        int sum_D=0;
+        for(int i=0;i<n;i++){
+            sum_D+=diff[i];
+            if(sum_D<nums[i])return false;
+        }
+        return true;
     }
 }
+
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        var ans = s.minCostConnectPoints(arr_int2_1);
+        var ans = s.isZeroArray(arr_int1_1,arr_int2_1);
         Printer.println(ans);
 
     }
 
     static void init_nums() {
-        arr_int1_1 = DataUtils.changeS_nums_1("[62,100,4]");
-        arr_int1_2 = DataUtils.changeS_nums_1("[2,-6,4,-5,-3,2,-7]");
-        arr_int2_1 = DataUtils.changeS_nums_2("[[0,0],[2,2],[3,10],[5,2],[7,0]]");
-        arr_int2_2 = DataUtils.changeS_nums_2("[[2,1],[3,2]]");
+        arr_int1_1 = DataUtils.changeS_nums_1("[1,0,1]");
+        arr_int1_2 = DataUtils.changeS_nums_1("[1,5]");
+        arr_int2_1 = DataUtils.changeS_nums_2(" [[0,2]]");
+        arr_int2_2 = DataUtils.changeS_nums_2("[[0,2],[2,3]]");
     }
 
     static void init_list() {
         list_int1_1 = DataUtils.changeS_list_1("[1,2]");
         list_int1_2 = DataUtils.changeS_list_1("[1,2]");
-        list_int2_1 = DataUtils.changeS_list_2("[[1,2],[4,2],[1,3],[5,2]]");
+        list_int2_1 = DataUtils.changeS_list_2("[[0,0,1],[0,2,2],[1,3,2]]");
         list_int2_2 = DataUtils.changeS_list_2("[[1,2],[4,2],[1,3],[5,2]]");
     }
 
@@ -57,9 +57,9 @@ public class Main {
     }
 
     static void init_string() {
-        arr_string1_1 = DataUtils.changeS_strarr_1("[\"abc\",\"ab\",\"bc\",\"b\"]");
+        arr_string1_1 = DataUtils.changeS_strarr_1("[\"leet\",\"code\",\"leetcode\"]");
         arr_string1_2 = DataUtils.changeS_strarr_1("[\"cde\",\"thh\",\"ghh\"]");
-        list_string1_1 = DataUtils.changeS_strlist_1("[\"apple\",\"apple\",\"app\"]");
+        list_string1_1 = DataUtils.changeS_strlist_1("[\"dog\",\"s\",\"gs\"]");
         list_string2_1 = DataUtils.chanegS_strlist_2("[[\"yeast\",\"flour\"]]");
     }
 

@@ -32,6 +32,9 @@ public class Printer {
     public static void println(int[] nums){
         System.out.println(Arrays.toString(nums));
     }
+    public static void println(long[] nums){
+        System.out.println(Arrays.toString(nums));
+    }
 
     public static void println(char[] nums){
         System.out.println(Arrays.toString(nums));

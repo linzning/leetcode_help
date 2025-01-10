@@ -47,6 +47,8 @@ public class Counter<T> {
         add(s);
     }
 
+    /*------------------------集合运算----------------------*/
+
     /**
      * this是否覆盖_count
      * @param _count
