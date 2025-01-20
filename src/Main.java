@@ -1,50 +1,38 @@
-import Algorithm.slidewindow.DoubleStack;
-import datastructer.STtable;
-import datastructer.trietree.TrieMap;
-import graph.MST.Prim;
 import linklist.ListNode;
 import tree.binarytree.TreeNode;
-import utils.MyMath;
 import utils.inout.DataUtils;
 import utils.inout.Printer;
 
 import java.util.*;
+import java.util.stream.IntStream;
+
 
 class Solution {
-    public boolean isZeroArray(int[] nums, int[][] queries) {
-        int n=nums.length;
-        int[]diff=new int[n];
-        for(int[]q:queries){
-            int num=q[2];
-            diff[q[0]]+=num;
-            diff[q[1]+1]-=num;
-        }
-        int sum_D=0;
-        for(int i=0;i<n;i++){
-            sum_D+=diff[i];
-            if(sum_D<nums[i])return false;
-        }
-        return true;
+    public int reachableNodes(int n, int[][] edges, int[] restricted) {
+
     }
 }
 
+
+
 public class Main {
+
     public static void main(String[] args) {
         Solution s = new Solution();
-        var ans = s.isZeroArray(arr_int1_1,arr_int2_1);
+        var ans = s.reachableNodes(arr_int1_1,2);
         Printer.println(ans);
 
     }
 
     static void init_nums() {
-        arr_int1_1 = DataUtils.changeS_nums_1("[1,0,1]");
-        arr_int1_2 = DataUtils.changeS_nums_1("[1,5]");
-        arr_int2_1 = DataUtils.changeS_nums_2(" [[0,2]]");
+        arr_int1_1 = DataUtils.changeS_nums_1("[1,2,3]");
+        arr_int1_2 = DataUtils.changeS_nums_1("[4,3]");
+        arr_int2_1 = DataUtils.changeS_nums_2("[[0,1,1],[0,2,5]]");
         arr_int2_2 = DataUtils.changeS_nums_2("[[0,2],[2,3]]");
     }
 
     static void init_list() {
-        list_int1_1 = DataUtils.changeS_list_1("[1,2]");
+        list_int1_1 = DataUtils.changeS_list_1("[1,2,3]");
         list_int1_2 = DataUtils.changeS_list_1("[1,2]");
         list_int2_1 = DataUtils.changeS_list_2("[[0,0,1],[0,2,2],[1,3,2]]");
         list_int2_2 = DataUtils.changeS_list_2("[[1,2],[4,2],[1,3],[5,2]]");

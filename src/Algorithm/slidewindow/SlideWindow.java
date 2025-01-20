@@ -1,5 +1,7 @@
 package Algorithm.slidewindow;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashSet;
 
 public class SlideWindow {
@@ -78,6 +80,35 @@ public class SlideWindow {
             }
             if(sum2>=goal+1){
                 ans-=left2+1;
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * 滑动窗口最大值，单调队列应用
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int n=nums.length;
+        int[]ans=new int[n-k+1];
+        //队列尾到头递增
+        Deque<Integer> queue=new ArrayDeque<>();
+        for(int i=0;i<n;i++){
+            //入
+            while (!queue.isEmpty()&&nums[queue.getLast()]<nums[i]){
+                queue.removeLast();
+            }
+            queue.addLast(i);
+            //出栈
+            if(i-queue.getFirst()>=k){// 队首已经离开窗口了
+                queue.removeFirst();
+            }
+            if(i>=k-1){
+                // 由于队首到队尾单调递减，所以窗口最大值就是队首
+                ans[i - k + 1] = nums[queue.getFirst()];
             }
         }
         return ans;

@@ -43,74 +43,54 @@ public class DataUtils {
                 .map(Integer::parseInt) // 转换为 Integer
                 .collect(Collectors.toList()); // 收集到 List
     }
+
     /**
      * string转二维数组
      * @param s
      * @return
      */
-    public static int[][] changeS_nums_2(String s){
-        s=s.substring(2,s.length()-2)+" ";
-        List<String>nums_list=new LinkedList<>();
-        int l=0,r=0;
-        int len=s.length();
-        while(l<len||r<len){
-            while(r<len&&s.charAt(r)!=']'){
-                r++;
-            }
-            nums_list.add(s.substring(l,r));
-            l=r+3;
-            r=l;
-        }
-        int n=nums_list.size();
-        int[][]ans=new int[n][];
-        for(int i=0;i<n;i++){
-            String num=nums_list.get(i).trim();
-            if(num.equals(""))ans[i]=new int[0];
-            else{
-                String[]nums=nums_list.get(i).trim().split(",");
-                int m=nums.length;
-                ans[i]=new int[m];
-                for(int j=0;j<m;j++){
-                    ans[i][j]=Integer.parseInt(nums[j]);
-                }
+    public static int[][] changeS_nums_2(String s) {
+        // 前后双重[[ ]]和不必要的空格
+        s=s.replaceAll("^\\s*\\[\\s*\\[\\s*|\\s*]\\s*]\\s*$","");
+        // 按照 "] [" 分割字符串，以区分不同的子数组
+        String[] rows = s.split("\\s*]\\s*,\\s*\\[\\s*");
+        // 创建二维数组
+        int[][] result = new int[rows.length][];
+        // 逐行处理
+        for (int i = 0; i < rows.length; i++) {
+            // 去掉每行两边的空格，并按 "," 分割为数字
+            String[] nums = rows[i].split("\\s*,\\s*");
+            // 将字符串数组转换为整数数组
+            result[i] = new int[nums.length];
+            for (int j = 0; j < nums.length; j++) {
+                result[i][j] = Integer.parseInt(nums[j]);
             }
         }
-        return ans;
+        return result;
     }
+
 
     /**
      * string转二维列表
      * @param s
      * @return
      */
-    public static List<List<Integer>> changeS_list_2(String s){
-        s=s.substring(2,s.length()-2)+" ";
-        List<String>nums_list=new LinkedList<>();
-        int l=0,r=0;
-        int len=s.length();
-        while(l<len||r<len){
-            while(r<len&&s.charAt(r)!=']'){
-                r++;
+    public static List<List<Integer>> changeS_list_2(String s) {
+        // 去掉前后的 [[ ]] 和不必要的空格
+        s = s.replaceAll("^\\s*\\[\\s*\\[\\s*|\\s*]\\s*]\\s*$", "");
+        // 按照 "] [" 分割字符串，以区分不同的子数组
+        String[] rows = s.split("\\s*]\\s*,\\s*\\[\\s*");
+        List<List<Integer>> result = new ArrayList<>();
+        for (int i = 0; i < rows.length; i++) {
+            // 去掉每行两边的空格，并按 "," 分割为数字
+            String[] nums = rows[i].split("\\s*,\\s*");
+            List<Integer> currentRow = new ArrayList<>();
+            for (int j = 0; j < nums.length; j++) {
+                currentRow.add(Integer.parseInt(nums[j]));
             }
-            nums_list.add(s.substring(l,r));
-            l=r+3;
-            r=l;
+            result.add(currentRow);
         }
-        int n=nums_list.size();
-        List<List<Integer>>ans=new ArrayList<>();
-        for(int i=0;i<n;i++){
-            ans.add(new ArrayList<>());
-            String num=nums_list.get(i).trim();
-            if(num.equals(""))continue;
-            else{
-                String[]nums=nums_list.get(i).trim().split(",");
-                int m=nums.length;
-                for (String string : nums) {
-                    ans.get(i).add(Integer.parseInt(string));
-                }
-            }
-        }
-        return ans;
+        return result;
     }
 
     /**
