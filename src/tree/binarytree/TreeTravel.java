@@ -12,12 +12,12 @@ public class TreeTravel {
      * @param root
      * @return
      */
-    public static List<Integer> preorderRecur(BinaryTreeNode root){
+    public static List<Integer> preorderRecur(TreeNode root){
         List<Integer>ans=new ArrayList<>();
         preorderRecurHelp(root,ans);
         return ans;
     }
-    private static void preorderRecurHelp(BinaryTreeNode root, List<Integer>ans){
+    private static void preorderRecurHelp(TreeNode root, List<Integer>ans){
         if(root==null)return;
         ans.add(root.val);
         preorderRecurHelp(root.left,ans);
@@ -28,13 +28,13 @@ public class TreeTravel {
      * @param root
      * @return
      */
-    public static List<Integer> preorder(BinaryTreeNode root){
+    public static List<Integer> preorder(TreeNode root){
         List<Integer>ans=new ArrayList<>();
-        Deque<BinaryTreeNode>stack=new ArrayDeque<>();
+        Deque<TreeNode>stack=new ArrayDeque<>();
         if(root==null)return ans;
         stack.offerLast(root);
         while(!stack.isEmpty()){
-            BinaryTreeNode cur=stack.pollLast();
+            TreeNode cur=stack.pollLast();
             ans.add(cur.val);
             //因为是栈所以先把右节点加入
             if(cur.right!=null)stack.offerLast(cur.right);
@@ -52,7 +52,7 @@ public class TreeTravel {
         inorderRecurHelp(root,ans);
         return ans;
     }
-    private static void inorderRecurHelp(BinaryTreeNode root, List<Integer>ans){
+    private static void inorderRecurHelp(TreeNode root, List<Integer>ans){
         if(root==null)return;
         inorderRecurHelp(root.left,ans);
         ans.add(root.val);
@@ -63,11 +63,11 @@ public class TreeTravel {
      * @param root
      * @return
      */
-    public static List<Integer> inorder(BinaryTreeNode root){
+    public static List<Integer> inorder(TreeNode root){
         List<Integer>ans=new ArrayList<>();
-        Deque<BinaryTreeNode>stack=new ArrayDeque<>();
+        Deque<TreeNode>stack=new ArrayDeque<>();
         if(root==null)return ans;
-        BinaryTreeNode cur=root;
+        TreeNode cur=root;
         while(cur!=null||!stack.isEmpty()){
             if(cur!=null){
                 stack.offerLast(cur);
@@ -91,7 +91,7 @@ public class TreeTravel {
         postorderRecurHelp(root,ans);
         return ans;
     }
-    private static void postorderRecurHelp(BinaryTreeNode root, List<Integer>ans){
+    private static void postorderRecurHelp(TreeNode root, List<Integer>ans){
         if(root==null)return;
         postorderRecurHelp(root.left,ans);
         postorderRecurHelp(root.right,ans);
@@ -104,9 +104,9 @@ public class TreeTravel {
      */
     public static List<Integer> postorder(TreeNode root){
         List<Integer>ans=new ArrayList<>();
-        Deque<BinaryTreeNode>stack=new ArrayDeque<>();
+        Deque<TreeNode>stack=new ArrayDeque<>();
         if(root==null)return ans;
-        BinaryTreeNode cur=root,pre=null;
+        TreeNode cur=root,pre=null;
         while(cur!=null||!stack.isEmpty()){
             while (cur!=null){
                 stack.offerLast(cur);
@@ -132,11 +132,11 @@ public class TreeTravel {
      */
     public static List<Integer> travel(TreeNode root){
         List<Integer>ans=new ArrayList<>();
-        Deque<BinaryTreeNode>stack=new LinkedList<>();
+        Deque<TreeNode>stack=new LinkedList<>();
         if(root==null)return ans;
         stack.offerLast(root);
         while(!stack.isEmpty()){
-            BinaryTreeNode cur=stack.pollLast();
+            TreeNode cur=stack.pollLast();
             if(cur!=null){
                 //就是在中节点后加入标志null,只有栈中出null说明遍历到我们要的节点了
                 stack.offerLast(cur);
@@ -156,12 +156,12 @@ public class TreeTravel {
      * @return
      */
     public static List<Integer> levelorder(TreeNode root){
-        Queue<BinaryTreeNode>queue=new LinkedList<>();
+        Queue<TreeNode>queue=new LinkedList<>();
         List<Integer>ans=new ArrayList<>();
         if(root==null)return ans;
         queue.offer(root);
         while(!queue.isEmpty()){
-            BinaryTreeNode cur=queue.poll();
+            TreeNode cur=queue.poll();
             ans.add(cur.val);
             if(cur.left!=null)queue.offer(cur.left);
             if(cur.right!=null)queue.offer(cur.right);
@@ -174,8 +174,8 @@ public class TreeTravel {
      * @param root
      * @return
      */
-    public static String getLevelSerialTree(BinaryTreeNode root){
-        Queue<BinaryTreeNode>queue=new LinkedList<>();
+    public static String getLevelSerialTree(TreeNode root){
+        Queue<TreeNode>queue=new LinkedList<>();
         StringBuilder ans=new StringBuilder();
         if(root==null)return ans.append('n').append(' ').toString();
         queue.offer(root);
@@ -184,16 +184,16 @@ public class TreeTravel {
             hasNode=false;
             int size= queue.size();
             while (size>0){
-                BinaryTreeNode cur=queue.poll();
+                TreeNode cur=queue.poll();
                 if(cur.val==-1)ans.append('n');
                 else ans.append(cur.val);
                 ans.append(' ');
-                if(cur.left==null)queue.offer(new BinaryTreeNode(-1,null,null));
+                if(cur.left==null)queue.offer(new TreeNode(-1,null,null));
                 else {
                     queue.offer(cur.left);
                     hasNode=true;
                 }
-                if(cur.right==null)queue.offer(new BinaryTreeNode(-1,null,null));
+                if(cur.right==null)queue.offer(new TreeNode(-1,null,null));
                 else {
                     queue.offer(cur.right);
                     hasNode=true;
@@ -210,12 +210,12 @@ public class TreeTravel {
      * @param root
      * @return
      */
-    public static String getPreorderSerialTree(BinaryTreeNode root){
+    public static String getPreorderSerialTree(TreeNode root){
         StringBuilder ans=new StringBuilder();
         preorderSerialHelp(root,ans);
         return ans.toString();
     }
-    private static void preorderSerialHelp(BinaryTreeNode root, StringBuilder ans){
+    private static void preorderSerialHelp(TreeNode root, StringBuilder ans){
         if(root==null){
             ans.append('n').append(' ');
             return;

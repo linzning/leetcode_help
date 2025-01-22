@@ -9,7 +9,7 @@ public class TreeAttribute {
      * @param root
      * @return
      */
-    public static int getTreeDepth(BinaryTreeNode root) {
+    public static int getTreeDepth(TreeNode root) {
         if(root==null)return 0;
         return 1+ Math.max(getTreeDepth(root.left), getTreeDepth(root.right));
     }
@@ -19,7 +19,7 @@ public class TreeAttribute {
      * @param root
      * @return int 树的最小高度，根节点到最近叶子节点的最短路径上的节点数量。
      */
-    public static int getTreeMinDepth(BinaryTreeNode root){
+    public static int getTreeMinDepth(TreeNode root){
         if (root==null)return 0;
         if(root.left==null)return getTreeMinDepth(root.right)+1;
         if(root.right==null)return getTreeMinDepth(root.left)+1;
@@ -36,20 +36,25 @@ public class TreeAttribute {
         return -1;
     }
 
+
+    private static int diaMeter;
     /**
-     * 获取树的直径,不一定经过root
+     * 获取树的直径(不一定经过root)
      * @param root
      * @return
      */
-    public static int getTreediameter(BinaryTreeNode root){
-        return dfs(root)[0];
+    public static int getTreediameter(TreeNode root){
+        diaMeter=0;
+        diameter_dfs(root);
+        return diaMeter;
     }
-    //int[]{根为root的直径,以root为根的最大深度}
-    private static int[]dfs(BinaryTreeNode root){
-        if(root==null)return new int[]{0,0};
-        int[]a=dfs(root.left);
-        int[]b=dfs(root.right);
-        int depth=Math.max(a[1],b[1])+1;
-        return new int[]{Math.max(a[1]+b[1],Math.max(a[0],b[0])),depth};
+    private static int diameter_dfs(TreeNode node) {
+        if (node == null) {
+            return -1;
+        }
+        int lLen = diameter_dfs(node.left) + 1; // 左子树最大链长+1
+        int rLen = diameter_dfs(node.right) + 1; // 右子树最大链长+1
+        diaMeter = Math.max(diaMeter, lLen + rLen); // 两条链拼成路径
+        return Math.max(lLen, rLen); // 当前子树最大链长
     }
 }

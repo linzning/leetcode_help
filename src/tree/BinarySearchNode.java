@@ -1,6 +1,5 @@
 package tree;
 
-import tree.binarytree.BinaryTreeNode;
 
 /**
  * 二叉搜索树

@@ -30,21 +30,6 @@ public class DataUtils {
     }
 
     /**
-     * string转二维列表
-     * @param str
-     * @return
-     */
-    public static List<Integer> changeS_list_1(String str){
-        // 去掉方括号
-        str = str.replaceAll("[\\[\\]]", "");
-
-        // 根据逗号分割字符串并转换为 List<Integer>
-        return Arrays.stream(str.split(","))
-                .map(Integer::parseInt) // 转换为 Integer
-                .collect(Collectors.toList()); // 收集到 List
-    }
-
-    /**
      * string转二维数组
      * @param s
      * @return
@@ -69,6 +54,20 @@ public class DataUtils {
         return result;
     }
 
+    /**
+     * string转一维列表
+     * @param str
+     * @return
+     */
+    public static List<Integer> changeS_list_1(String str){
+        // 去掉方括号
+        str = str.replaceAll("[\\[\\]]", "");
+
+        // 根据逗号分割字符串并转换为 List<Integer>
+        return Arrays.stream(str.split(","))
+                .map(Integer::parseInt) // 转换为 Integer
+                .collect(Collectors.toList()); // 收集到 List
+    }
 
     /**
      * string转二维列表
@@ -132,6 +131,11 @@ public class DataUtils {
         return charArray;
     }
 
+    /**
+     * 转List<String>
+     * @param s
+     * @return
+     */
     public static List<String> changeS_strlist_1(String s){
         // 去掉前后中括号和空格
         s = s.substring(1, s.length() - 1).trim();
@@ -147,6 +151,11 @@ public class DataUtils {
         return result;
     }
 
+    /**
+     * 转List<List<String>
+     * @param s
+     * @return
+     */
     public static List<List<String>> chanegS_strlist_2(String s){
         // 去掉最外层的中括号
         s = s.substring(1, s.length() - 1).trim();
@@ -175,6 +184,11 @@ public class DataUtils {
         return result;
     }
 
+    /**
+     * 转String[]
+     * @param s
+     * @return
+     */
     public static String[] changeS_strarr_1(String s){
         // 去掉最外层的中括号
         s = s.substring(1, s.length() - 1).trim();
@@ -187,5 +201,19 @@ public class DataUtils {
             items[i] = items[i].replace("\"", "");
         }
         return items;
+    }
+
+    public static List<Boolean> changeS_list_boolean_1(String s){
+        // 去除前后[ ]和不必要的空格
+        s=s.replaceAll("^\\s*\\[\\s*|\\s*]\\s*$","");
+        // 按照 "," 分割字符串
+        String[] rows = s.split("\\s*,\\s*");
+        // 创建二维数组
+        List<Boolean>result=new ArrayList<>();
+        // 逐行处理
+        for (int i = 0; i < rows.length; i++) {
+            result.add(Boolean.parseBoolean(rows[i]));
+        }
+        return result;
     }
 }

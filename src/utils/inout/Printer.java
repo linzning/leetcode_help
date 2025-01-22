@@ -2,7 +2,7 @@ package utils.inout;
 
 import datastructer.Counter;
 import linklist.ListNode;
-import tree.binarytree.BinaryTreeNode;
+import tree.binarytree.TreeNode;
 
 import java.util.*;
 
@@ -73,8 +73,8 @@ public class Printer {
     }
 
     /* ---------------------------------类---------------------------------- */
-    public static <T extends BinaryTreeNode> void println(T root){
-        BinaryTreeNode.printTree(root);
+    public static <T extends TreeNode> void println(T root){
+        TreeNode.printTree(root);
     }
 
     public static void println(ListNode head){
