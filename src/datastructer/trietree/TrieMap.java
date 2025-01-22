@@ -3,6 +3,9 @@ package datastructer.trietree;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ *  自己构建的字典树map,可以之前前缀等的查询
+ */
 public class TrieMap {
     class TrieNode {
         int value;//值，仅当是单词结尾时有效
