@@ -1,4 +1,4 @@
-package utils.sort;
+package utils.algorithm.sort;
 
 /**
  * 基本数据类型的quicksort

@@ -1,4 +1,4 @@
-package datastructer;
+package utils.algorithm;
 
 public class PreSum {
     /**

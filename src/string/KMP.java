@@ -1,6 +1,6 @@
-package utils;
+package string;
 
-public class StringUtils {
+public class KMP {
     /**
      * 在文本串s中寻找模式串p，并返回匹配开始位置，失败则-1
      * @param str 文本串
@@ -26,9 +26,9 @@ public class StringUtils {
         i指上面，j指下面
          */
         for(i=1,j=0;i<plen;i++){
-           while(j>0&&p[i]!=p[j])j=pmt[j-1];
-           if(p[i]==p[j])j++;
-           pmt[i]=j;
+            while(j>0&&p[i]!=p[j])j=pmt[j-1];
+            if(p[i]==p[j])j++;
+            pmt[i]=j;
         }
         for(i=0,j=0;i<slen;i++){
             while (j>0&&s[i]!=p[j])j=pmt[j-1];

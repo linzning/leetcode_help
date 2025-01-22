@@ -10,9 +10,9 @@ import java.util.Queue;
  * 里面有创建和打印方法
  */
 public class TreeNode {
-    protected int val;
-    protected TreeNode left;
-    protected TreeNode right;
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
 
     public TreeNode(){
         val=-1;
@@ -41,7 +41,7 @@ public class TreeNode {
      * @param str
      */
     public static TreeNode buildTree(String str){
-        str.replaceAll("null",String.valueOf(Integer.MIN_VALUE));
+        str=str.replaceAll("null",String.valueOf(Integer.MIN_VALUE));
         int[]nodes= DataUtils.changeS_nums_1(str);
         if(nodes==null||nodes.length==0)return null;
         TreeNode root = new TreeNode(nodes[0]);

@@ -8,55 +8,42 @@ import java.util.stream.IntStream;
 
 
 class Solution {
-    public int[] findSubtreeSizes(int[] parent, String s) {
-        char[]str=s.toCharArray();
+    int maxDiameter;
+    public int longestPath(int[] parent, String s) {
         int n=parent.length;
-        List<Integer>[]graph=new List[n];
+        List<int[]>[]graph=new List[n];
         Arrays.setAll(graph,e->new ArrayList<>());
         for(int i=1;i<n;i++){
-            graph[parent[i]].add(i);
+            graph[parent[i]].add(new int[]{i,1});
         }
-        //第一遍dfs,删除
-        int[]ancestor=new int[26];//记录树上最新的字符所代表的节点
-        Arrays.fill(ancestor,-1);
-        dfs(0,graph,ancestor,str);
-        //第二遍dfs,统计各节点子节点个数
-        int[]count=new int[n];
-        count_child(0,graph,count);
-        return count;
+        getTreeDiameter(graph,s);
+        return maxDiameter;
     }
-    void dfs(int cur,List<Integer>[]graph,int[]ancestor,char[]str){
-        char c=str[cur];
-        int old=ancestor[c-'a'];
-        ancestor[c-'a']=cur;
-        int size=graph[cur].size();//因为在遍历的同时加数据，所以要固定遍历的大小
-        for(int i=0;i<size;i++){
-            int nex=graph[cur].get(i);
-            int anc=ancestor[str[nex]-'a'];
-            if(anc!=-1){//存在祖先节点
-                graph[anc].add(nex);
-                graph[cur].set(i,-1);//设为-1表示删除
-            }
-            dfs(nex,graph,ancestor,str);
-        }
-        ancestor[c-'a']=old;//回溯
+    public int getTreeDiameter(List<int[]>[]graph,String s){
+        maxDiameter=0;
+        getTreeDiameter_dfs(0,-1,graph,s);
+        return maxDiameter;
     }
-    void count_child(int cur,List<Integer>[]graph,int[]count){
-        int num=1;
-        for(int nex:graph[cur]){
-            if(nex!=-1){
-                count_child(nex,graph,count);
-                num+=count[nex];
+    //返回当前节点向下的最长路径
+    int getTreeDiameter_dfs(int cur,int fa,List<int[]>[]graph,String s){
+        int maxLen=0;
+        for(int[]nex:graph[cur]){
+            if(nex[0]!=fa){
+                int subLen=getTreeDiameter_dfs(nex[0],cur,graph,s)+nex[1];
+                if(s.charAt(cur)!=s.charAt(nex[0])){
+                    maxDiameter=Math.max(maxDiameter,maxLen+subLen);
+                    maxLen=Math.max(maxLen,subLen);
+                }
             }
         }
-        count[cur]=num;
+        return maxLen;
     }
 }
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        var ans = s.findSubtreeSizes(arr_int1_1, "abaabc");
+        var ans = s.longestPath(arr_int1_1,"abacbe");
         Printer.println(ans);
 
     }
@@ -98,7 +85,7 @@ public class Main {
     }
 
     static void init_tree() {
-        root = TreeNode.buildTree("[1, 2, -3, 3, 1]");
+        root = TreeNode.buildTree("[1,5,3,null,4,10,6,9,2]");
         //TreeNode.printTree(root);
     }
 
