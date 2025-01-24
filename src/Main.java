@@ -8,44 +8,113 @@ import java.util.stream.IntStream;
 
 
 class Solution {
-    int maxDiameter;
-    public int longestPath(int[] parent, String s) {
-        int n=parent.length;
-        List<int[]>[]graph=new List[n];
-        Arrays.setAll(graph,e->new ArrayList<>());
-        for(int i=1;i<n;i++){
-            graph[parent[i]].add(new int[]{i,1});
+    static int MOD=(int)1e9+7;
+    long add(long a,long b){
+        return (a+b)%MOD;
+    }
+    long sub(long a,long b){
+        return (a-b+MOD)%MOD;
+    }
+
+    /**、
+     * 把任意整数 a 取模到 [0,MOD-1] 中，无论 a 是正是负
+     * @param a
+     * @return
+     */
+    long normal(long a){
+        return (a%MOD+MOD)%MOD;
+    }
+
+    /**
+     * 乘法
+     * @param a
+     * @param b
+     * @return
+     */
+    long multi(long a,long b){
+        return a*b%MOD;
+    }
+
+    /**
+     * 多个数乘法，每次都要取MOD
+     * @param nums
+     * @return
+     */
+    long multi_arr(List<Long>nums){
+        long ans=1;
+        for(long n:nums){
+            ans=ans*n%MOD;
         }
-        getTreeDiameter(graph,s);
-        return maxDiameter;
+        return ans;
     }
-    public int getTreeDiameter(List<int[]>[]graph,String s){
-        maxDiameter=0;
-        getTreeDiameter_dfs(0,-1,graph,s);
-        return maxDiameter;
+
+    /**
+     * 除（MOD 是质数且 b 不是 MOD 的倍数）
+     * @param a
+     * @param b
+     * @return
+     */
+    long div(long a,long b){
+        return  a * qpow(b, MOD - 2, MOD) % MOD;
     }
-    //返回当前节点向下的最长路径
-    int getTreeDiameter_dfs(int cur,int fa,List<int[]>[]graph,String s){
-        int maxLen=0;
-        for(int[]nex:graph[cur]){
-            if(nex[0]!=fa){
-                int subLen=getTreeDiameter_dfs(nex[0],cur,graph,s)+nex[1];
-                if(s.charAt(cur)!=s.charAt(nex[0])){
-                    maxDiameter=Math.max(maxDiameter,maxLen+subLen);
-                    maxLen=Math.max(maxLen,subLen);
-                }
+
+    /**
+     * 快速幂计算 (x^y) % mod
+     * @param x
+     * @param y
+     * @param mod
+     * @return
+     */
+    private long qpow(long x,int y,int mod){
+        long result = 1;
+        while (y > 0) {
+            if (y % 2 == 1) {
+                result = result * x % mod;
             }
+            x = x * x % mod;
+            y /= 2;
         }
-        return maxLen;
+        return result;
+    }
+    public int numWays(String _s) {
+        int n=_s.length();
+        char[]s=_s.toCharArray();
+        int total_count=0;
+        for(char c:s)total_count+=c-'0';
+        if(total_count%3!=0)return 0;
+        if(total_count==0){
+            return (int) (((long)(n-1)*(n-2)/2)%MOD);
+        }
+        int i=0;
+        int numCount=0;
+        while (numCount<total_count/3){
+            numCount+=s[i++]-'0';
+        }
+        int pre=i;
+        while (s[i]!='1')i++;
+        int number1=i-pre+1;
+        while (numCount<2*(total_count/3)){
+            numCount+=s[i++]-'0';
+        }
+        pre=i;
+        while (s[i]!='1')i++;
+        int number2=i-pre+1;
+        return (int) multi(number1,number2);
     }
 }
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        var ans = s.longestPath(arr_int1_1,"abacbe");
+        var ans = s.numWays("00000000");
         Printer.println(ans);
 
+
+        long num=1;
+        for(int i=1;i<1000;i++){
+            num*=i;
+            System.out.println(i+": "+num);
+        }
     }
 
     static void init_nums() {
@@ -71,7 +140,7 @@ public class Main {
     }
 
     static void init_string() {
-        arr_string1_1 = DataUtils.changeS_strarr_1("[\"leet\",\"code\",\"leetcode\"]");
+        arr_string1_1 = DataUtils.changeS_strarr_1("[\"011001\",\"000000\",\"010100\",\"001000\"]");
         arr_string1_2 = DataUtils.changeS_strarr_1("[\"cde\",\"thh\",\"ghh\"]");
         list_string1_1 = DataUtils.changeS_strlist_1("[\"dog\",\"s\",\"gs\"]");
         list_string2_1 = DataUtils.chanegS_strlist_2("[[\"yeast\",\"flour\"]]");
