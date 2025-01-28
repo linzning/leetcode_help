@@ -1,6 +1,8 @@
 package math;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class NumberTheory {
     /**
@@ -28,30 +30,32 @@ public class NumberTheory {
         return a * b / GCD(a, b);
     }
 
+
+    static final int N = 1000000; // Adjust N based on your needs
+    List<Integer> pri = new ArrayList<>();//n以内质数
+    boolean[] notPrime = new boolean[N];
+    int[] phi = new int[N];//欧拉函数值
+
     /**
-     * 素数计数
+     * 线性筛法
      * @param n
-     * @return
      */
-    public static int countPrimes(int n) {
-        /*
-        埃氏筛算法
-        质数的倍数是合数，所以当遍历到质数时，把它的所有倍数筛去
-        优化：从$i*i $开始筛，因为$2*i , 3*i$已经被2 ，3筛过了
-         */
-        int[]isprime=new int[n];
-        Arrays.fill(isprime,1);
-        int ans=0;
-        for(int i=2;i<n;i++){
-            if(isprime[i]==1){
-                ans++;
-                if((long)i*i<n) {
-                    for (int j = i * i; j < n; j += i) {
-                        isprime[j] = 0;
-                    }
+    public void countPrime(int n) {
+        phi[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            if (!notPrime[i]) {
+                pri.add(i);
+                phi[i] = i - 1;
+            }
+            for (int pri_j : pri) {
+                if (i * pri_j > n) break;
+                notPrime[i * pri_j] = true;
+                if (i % pri_j == 0) {
+                    phi[i * pri_j] = phi[i] * pri_j;
+                    break;
                 }
+                phi[i * pri_j] = phi[i] * phi[pri_j];
             }
         }
-        return ans;
     }
 }

@@ -4,11 +4,12 @@ package math.combinatorics;
  * 没有取MOD的排列组合数
  */
 public class Combinatorics {
-    static long[]Factorial=new long[21];//预处理阶乘数组,大于20就溢出了
+    static long[] Factorial = new long[21];//预处理阶乘数组,大于20就溢出了
+
     static {
-        Factorial[0]=1;
-        for(int i=1;i<22;i++){
-            Factorial[i]=Factorial[i-1]*i;
+        Factorial[0] = 1;
+        for (int i = 1; i < 22; i++) {
+            Factorial[i] = Factorial[i - 1] * i;
         }
     }
 

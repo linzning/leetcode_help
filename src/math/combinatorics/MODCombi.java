@@ -55,4 +55,8 @@ public class MODCombi {
     private long permutation(int n, int m) {
         return m < 0 || m > n ? 0 : F[n] * INV_F[n - m] % MOD;
     }
+
+    private long factorial(int n){
+        return F[n];
+    }
 }

@@ -28,7 +28,7 @@ public class NormalTree {
      * 求树的直径
      *
      * 树形 DP 求直径。枚举子树 x 的所有子树 y，维护从 x 出发的最长路径 maxLen，
-     * 那么可以更新答案为从 y 出发的最长路径加上 maxLen，再加上 1（边 x−y），即合并从 x 出发的两条路径。
+     * 那么可以更新答案为从 y 出发的最长路径加上 maxLen，再加上 nex[1]（边 x−y），即合并从 x 出发的两条路径。
      * 递归结束时返回 maxLen。
      *
      * @param graph
@@ -45,8 +45,8 @@ public class NormalTree {
         for(int[]nex:graph[cur]){
             if(nex[0]!=fa){
                 int subLen=getTreeDiameter_dfs(nex[0],cur,graph)+nex[1];
-                maxDiameter=Math.max(maxDiameter,maxLen+subLen);
-                maxLen=Math.max(maxLen,subLen);
+                maxDiameter=Math.max(maxDiameter,maxLen+subLen);//左侧子树的最长链长和当前子树的链长，和直径取max
+                maxLen=Math.max(maxLen,subLen);//maxlen是所有左侧子树的最长链长
             }
         }
         return maxLen;

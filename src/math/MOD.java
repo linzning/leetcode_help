@@ -15,15 +15,6 @@ public class MOD {
         return (a-b+MOD)%MOD;
     }
 
-    /**、
-     * 把任意整数 a 取模到 [0,MOD-1] 中，无论 a 是正是负
-     * @param a
-     * @return
-     */
-    long normal(long a){
-        return (a%MOD+MOD)%MOD;
-    }
-
     /**
      * 乘法
      * @param a
@@ -55,6 +46,15 @@ public class MOD {
      */
     long div(long a,long b){
         return  a * qpow(b, MOD - 2, MOD) % MOD;
+    }
+
+    /**、
+     * 把任意整数 a 取模到 [0,MOD-1] 中，无论 a 是正是负
+     * @param a
+     * @return
+     */
+    long normal(long a){
+        return (a%MOD+MOD)%MOD;
     }
 
     /**
