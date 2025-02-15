@@ -159,4 +159,36 @@ public class BinarySearch {
         }
         return right-left+1;
     }
+
+    /**
+     * 搜索旋转数组（可能有重复值）
+     * @param nums
+     * @param target
+     * @return
+     * [81. 搜索旋转排序数组 II - 力扣（LeetCode）]
+     * (https://leetcode.cn/problems/search-in-rotated-sorted-array-ii/description)
+     */
+    public boolean search(int[] nums, int target) {
+        int left=0,right=nums.length-1;
+        while (left<=right){
+            int mid=left+((right-left)>>1);
+            if(nums[mid]==target||nums[left]==target||nums[right]==target)return true;
+            //三端相同，无法判断在哪一侧
+            if(nums[mid]==nums[left]&&nums[mid]==nums[right]){
+                left++;
+                right--;
+            }
+            //旋转点偏左如78 - 123456
+            else if(nums[mid]<nums[left]){
+                if(target>nums[left]||target<nums[mid])right=mid-1;
+                else left=mid+1;
+            }
+            //旋转点偏右如123456 - 78
+            else{
+                if(target>nums[left]&&target<nums[mid])right=mid-1;
+                else left=mid+1;
+            }
+        }
+        return false;
+    }
 }
