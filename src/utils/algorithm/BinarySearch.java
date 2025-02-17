@@ -46,6 +46,19 @@ public class BinarySearch {
         return -(l+1);
     }
 
+    int lowerBound(int[]arr,int x){
+        int left=0,right=arr.length-1;
+        while (left<=right){
+            int mid=left+((right-left)>>1);
+            if(arr[mid]>=x){
+                right=mid-1;
+            }else{
+                left=mid+1;
+            }
+        }
+        return left;
+    }
+
     /**
      * 二分查找int[],左边界
      * @param arr
