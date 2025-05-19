@@ -1,6 +1,8 @@
 package Algorithm.dynamicprogramming;
 
 public class matrixDP {
+    //网格图方向
+    static int[][]dirs=new int[][]{{1,0},{-1,0},{0,1},{0,-1}};
     /**
      * [931. 下降路径最小和 - 力扣（LeetCode）](https://leetcode.cn/problems/minimum-falling-path-sum/description/)
      * @param matrix

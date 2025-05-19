@@ -1,52 +1,92 @@
+import datastructer.Counter;
 import linklist.ListNode;
+import math.MOD;
 import tree.binarytree.TreeNode;
 import utils.inout.DataUtils;
 import utils.inout.Printer;
 
+import javax.swing.*;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.IntStream;
-
 
 class Solution {
-    public int findSpecialInteger(int[] arr) {
-        int m=arr.length/4;
-        for (int i : new int[]{m, m * 2 + 1}) {
-            int x = arr[i];
-            // > x 等价于 >= x+1
-            if (lowerBound(arr, x + 1) - lowerBound(arr, x) > m) {
-                return x;
+    int []_height;
+    public int binaryS_l(List<Integer>list,int num){
+        int l=0,r=list.size()-1;
+        while (l<=r){
+            int mid=l+((r-l)>>1);
+            if(_height[list.get(mid)]>=num){
+                r=mid-1;
+            }
+            else{
+                l=mid+1;
             }
         }
-        // 如果答案不是 arr[m] 也不是 arr[2m+1]，那么答案一定是 arr[3m+2]
-        return arr[m * 3 + 2];
+        return l;
     }
-    int lowerBound(int[]arr,int x){
-        int left=0,right=arr.length-1;
-        while (left<=right){
-            int mid=left+((right-left)>>1);
-            if(arr[mid]>=x){
-                right=mid-1;
-            }else{
-                left=mid+1;
+    public int binaryS_r(List<Integer>list,int num){
+        int l=0,r=list.size()-1;
+        while (l<=r){
+            int mid=l+((r-l)>>1);
+            if(_height[list.get(mid)]>=num){
+                r=mid-1;
+            }
+            else{
+                l=mid+1;
             }
         }
-        return left;
+        return l;
+    }
+    public int maxArea(int[] height) {
+        _height=height;
+        int n=height.length;
+        //数组模拟栈
+        List<Integer>stack=new ArrayList<>();
+        int maxArea=0;
+        //栈中维护递增下标
+        for(int i=0;i<n;i++){
+            if(stack.isEmpty()||height[i]>height[stack.get(stack.size()-1)]){
+                stack.add(i);
+            }
+        }
+        //找左侧最远更大值
+        for(int i=n-1;i>=0;i--){
+            int index=stack.get(binaryS_l(stack,height[i]));
+            if(height[index]>=height[i]){
+                maxArea=Math.max(maxArea,(i-index)*height[i]);
+            }
+        }
+        stack.clear();
+        //栈中维护递增下标
+        for(int i=n-1;i>=0;i--){
+            if(stack.isEmpty()||height[i]>height[stack.get(stack.size()-1)]){
+                stack.add(i);
+            }
+        }
+        //找右侧最远更大值
+        for(int i=0;i<n;i++){
+            int index=stack.get(binaryS_r(stack,height[i]));
+            if(height[index]>=height[i]){
+                maxArea=Math.max(maxArea,(index-i)*height[i]);
+            }
+        }
+        return maxArea;
     }
 }
 
 
 public class Main {
+    //元音字母
+    static HashSet<Character> set = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
+
     public static void main(String[] args) {
         Solution s = new Solution();
-        var ans = s.findSpecialInteger("abaacbaecebce", "ba*c*ce");
+        var ans = s.maxArea(arr_int1_1);
         Printer.println(ans);
 
     }
 
     static void init_nums() {
-        arr_int1_1 = DataUtils.changeS_nums_1("[5,6,2]");
+        arr_int1_1 = DataUtils.changeS_nums_1("[1,8,6,2,5,4,8,3,7]");
         arr_int1_2 = DataUtils.changeS_nums_1("[-1,-2,-3]");
         arr_int2_1 = DataUtils.changeS_nums_2("[[0,0,2],[1,1,1]]");
         arr_int2_2 = DataUtils.changeS_nums_2("[[0,2],[2,3]]");
